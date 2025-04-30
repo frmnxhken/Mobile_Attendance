@@ -17,7 +17,7 @@ export default function Home() {
                     alignItems: "center",
                 }}>
                     <Text style={{
-                        fontSize: "24px",
+                        fontSize: 24,
                         fontWeight: "medium",
                     }}>Hello World</Text>
                 </View>

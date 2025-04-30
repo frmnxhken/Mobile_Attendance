@@ -18,14 +18,14 @@ const HeaderProfile = () => {
                 }}
             />
             <View style={{
-                marginLeft: "10px"
+                marginLeft: 10
             }}>
                 <Text style={{
-                    fontSize: "10px",
+                    fontSize: 10,
                     color: Colors.gray
                 }}>Welcome Back!</Text>
                 <Text style={{
-                    fontSize: "16px",
+                    fontSize: 16,
                     fontFamily: "Inter-Semibold"
                 }}>Karina</Text>
             </View>
