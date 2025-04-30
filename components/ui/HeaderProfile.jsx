@@ -14,7 +14,7 @@ const HeaderProfile = () => {
                     width: 46,
                     height: 46,
                     resizeMode: "cover",
-                    borderRadius: "100%"
+                    borderRadius: 100
                 }}
             />
             <View style={{
