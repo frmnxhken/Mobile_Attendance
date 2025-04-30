@@ -1,27 +1,34 @@
 import React from "react";
 import { Text, View, SafeAreaView, ScrollView } from "react-native";
 import HeaderProfile from "../components/ui/HeaderProfile";
-import { Link } from "expo-router";
+import Sizes from "../constants/Sizes";
+import Colors from "../constants/Colors";
+import CalendarSlide from "../components/home/CalendarSlide";
 
 export default function Home() {
+    const calendar = [
+        {}
+    ]
     return (
         <SafeAreaView style={{
-            paddingHorizontal: 15,
-            paddingVertical: 20
+            flex: 1,
+            paddingVertical: 20,
+            backgroundColor: "#fff",
         }}>
             <ScrollView>
-                <HeaderProfile/>
                 <View style={{
-                    flex: 1,
-                    justifyContent: "center",
-                    alignItems: "center",
+                    paddingHorizontal: 15,
                 }}>
-                    <Text style={{
-                        fontSize: 24,
-                        fontWeight: "medium",
-                    }}>Hello World</Text>
+                    <HeaderProfile/>
                 </View>
-                <Link href="/signin">Ke Login</Link>
+                <CalendarSlide/>
+                <View style={{
+                    paddingHorizontal: 15,
+                }}>
+                    <View>
+                        
+                    </View>
+                </View>
             </ScrollView>
         </SafeAreaView>
     )

@@ -2,33 +2,42 @@ import React from "react";
 import { View, Text, Image } from "react-native";
 import Colors from "../../constants/Colors";
 
+import BellIcon from "../../assets/Icons/BellIcon";
+
 const HeaderProfile = () => {
     return (
         <View style={{
             flexDirection: "row",
-            alignItems: "center"
+            alignItems: "center",
+            justifyContent: "space-between"
         }}>
-            <Image
-                source={{ uri: "https://upload.wikimedia.org/wikipedia/commons/0/08/Aespa_Karina_2024_MMA_2.jpg" }}
-                style={{
-                    width: 46,
-                    height: 46,
-                    resizeMode: "cover",
-                    borderRadius: 100
-                }}
-            />
             <View style={{
-                marginLeft: 10
+                flexDirection: "row",
+                alignItems: "center"
             }}>
-                <Text style={{
-                    fontSize: 10,
-                    color: Colors.gray
-                }}>Welcome Back!</Text>
-                <Text style={{
-                    fontSize: 16,
-                    fontFamily: "Inter-Semibold"
-                }}>Karina</Text>
+                <Image
+                    source={{ uri: "https://upload.wikimedia.org/wikipedia/commons/0/08/Aespa_Karina_2024_MMA_2.jpg" }}
+                    style={{
+                        width: 46,
+                        height: 46,
+                        resizeMode: "cover",
+                        borderRadius: 100
+                    }}
+                />
+                <View style={{
+                    marginLeft: 10
+                }}>
+                    <Text style={{
+                        fontSize: 10,
+                        color: Colors.gray
+                    }}>Welcome Back!</Text>
+                    <Text style={{
+                        fontSize: 16,
+                        fontFamily: "Inter-Semibold"
+                    }}>Karina</Text>
+                </View>
             </View>
+            <BellIcon/>
         </View>
     )
 }
