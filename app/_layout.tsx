@@ -10,9 +10,10 @@ export default function RootLayout() {
   });
   return (
     <>
-      <StatusBar hidden={true}/>
+      <StatusBar hidden={false}/>
       <Stack>
         <Stack.Screen name="index" options={{ headerShown: false}} />
+        <Stack.Screen name="signin/index" options={{ headerShown: false}} />
       </Stack>
     </>
   );

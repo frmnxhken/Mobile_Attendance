@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, View, SafeAreaView, ScrollView } from "react-native";
 import HeaderProfile from "../components/ui/HeaderProfile";
+import { Link } from "expo-router";
 
 export default function Home() {
     return (
@@ -20,6 +21,7 @@ export default function Home() {
                         fontWeight: "medium",
                     }}>Hello World</Text>
                 </View>
+                <Link href="/signin">Ke Login</Link>
             </ScrollView>
         </SafeAreaView>
     )
