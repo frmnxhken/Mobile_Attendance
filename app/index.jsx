@@ -3,7 +3,11 @@ import { Text, View, SafeAreaView, ScrollView } from "react-native";
 import HeaderProfile from "../components/ui/HeaderProfile";
 import CalendarSlide from "../components/home/CalendarSlide";
 import Card from "../components/ui/Card";
+import Button from "../components/ui/Button";
 import Sizes from "../constants/Sizes";
+import { Link } from "expo-router";
+import Colors from "../constants/Colors";
+import ListItem from "../components/ui/ListItem";
 
 
 export default function Home() {
@@ -36,7 +40,6 @@ export default function Home() {
     return (
         <SafeAreaView style={{
             flex: 1,
-            paddingVertical: 20,
             backgroundColor: "#fff",
         }}>
             <ScrollView>
@@ -48,9 +51,11 @@ export default function Home() {
                 <CalendarSlide/>
                 <View style={{
                     paddingHorizontal: 15,
+                    paddingBottom: 40
                 }}>
                     <View style={{
-                        marginTop: 10
+                        marginTop: 10,
+                        marginBottom: 30
                     }}>
                         <Text style={{
                             fontSize: Sizes.title,
@@ -74,8 +79,44 @@ export default function Home() {
                             ))}
                         </View>
                     </View>
+                    <View>
+                        <View style={{
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "space-between"
+                        }}>
+                            <Text style={{
+                                fontSize: Sizes.title,
+                                fontFamily: "Inter-SemiBold"
+                            }}>Attendance Recent</Text>
+                            <Link href="/" style={{
+                                color: Colors.gray,
+                                fontSize: Sizes.action,
+                                fontFamily: "Inter-Regular"
+                            }}>View All</Link>
+                        </View>
+                        <View style={{
+                            flex: 1,
+                            rowGap: 15,
+                            marginTop: 15
+                        }}>
+                            {[1,2,3,4,5].map((_, index) => (
+                                <ListItem/>
+                            ))}
+                        </View>
+                    </View>
                 </View>
             </ScrollView>
+            <View style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                columnGap: 10,
+                paddingVertical: 10,
+                paddingHorizontal: 15
+            }}>
+                <Button text="Excused" type="dark" style={{width: "48%"}}/>
+                <Button text="Checkin" style={{width: "48%"}}/>
+            </View>
         </SafeAreaView>
     )
 }

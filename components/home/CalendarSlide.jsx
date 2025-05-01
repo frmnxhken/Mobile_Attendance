@@ -7,7 +7,7 @@ const CalendarSlide = () => {
     const weekData = [
         { date: "28", day: "Mon" },
         { date: "29", day: "Tue" },
-        { date: "30", day: "Wed", active: true },
+        { date: "30", day: "Wed ", active: true },
         { date: "01", day: "Thu" },
         { date: "02", day: "Fri" },
         { date: "03", day: "Sat" },
