@@ -4,7 +4,7 @@ import { Link } from 'expo-router'
 
 import ArrowLeftIcon from "../../assets/Icons/ArrowLeftIcon";
 
-const HeaderBar = () => {
+const HeaderBar = (props) => {
   return (
     <View style={{
       flexDirection: "row",
@@ -17,8 +17,9 @@ const HeaderBar = () => {
       <Text style={{
         textAlign: "center",
         margin: "auto",
-        paddingRight: 20
-      }}>History Attendance</Text>
+        paddingRight: 20,
+        fontFamily: "Inter-Medium"
+      }}>{props.name}</Text>
     </View>
   )
 }

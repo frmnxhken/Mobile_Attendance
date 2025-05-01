@@ -71,6 +71,7 @@ export default function Home() {
                         }}>
                             {todayAttendances.map((today, index) => (
                                 <Card
+                                    key={index}
                                     label={today.label}
                                     value={today.value}
                                     icon={today.icon}
@@ -101,7 +102,9 @@ export default function Home() {
                             marginTop: 15
                         }}>
                             {[1,2,3,4,5].map((_, index) => (
-                                <ListItem/>
+                                <ListItem
+                                    key={index}
+                                />
                             ))}
                         </View>
                     </View>
