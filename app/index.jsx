@@ -1,13 +1,38 @@
 import React from "react";
 import { Text, View, SafeAreaView, ScrollView } from "react-native";
 import HeaderProfile from "../components/ui/HeaderProfile";
-import Sizes from "../constants/Sizes";
-import Colors from "../constants/Colors";
 import CalendarSlide from "../components/home/CalendarSlide";
+import Card from "../components/ui/Card";
+import Sizes from "../constants/Sizes";
 
-import InGreenIcon from "../assets/Icons/InGreenIcon";
 
 export default function Home() {
+    const todayAttendances = [
+        {
+            "label": "Start Shift",
+            "value": "09:00",
+            "icon": "checkin",
+            "color": "lightGreen"
+        },
+        {
+            "label": "End Shift",
+            "value": "15:00",
+            "icon": "checkout",
+            "color": "pink"
+        },
+        {
+            "label": "Time Off",
+            "value": "54%",
+            "icon": "clock",
+            "color": "yellow"
+        },
+        {
+            "label": "Total Attended",
+            "value": "12 Days",
+            "icon": "calendar",
+            "color": "lightBlue"
+        },
+    ]
     return (
         <SafeAreaView style={{
             flex: 1,
@@ -39,46 +64,13 @@ export default function Home() {
                             rowGap: 20,
                             marginTop: 15
                         }}>
-                            {[1,2,3,4].map((_, index) => (
-                                <View style={{
-                                    width: "48%",
-                                    backgroundColor: "white",
-                                    borderRadius: 12,
-                                    shadowColor: "#6F80B2",
-                                    shadowOffset: { width: 0, height: 0 },
-                                    shadowOpacity: 0.1,
-                                    shadowRadius: 13,
-                                    elevation: 13,
-                                }}>
-                                    <View style={{
-                                        paddingTop: 15,
-                                        paddingBottom: 20,
-                                        paddingHorizontal: 15,
-                                        flexDirection: "row",
-                                        alignItems: "center",
-                                        justifyContent: "space-between",
-                                }}>
-                                        <View>
-                                            <Text style={{
-                                                fontSize: Sizes.title,
-                                                fontFamily: "Inter-SemiBold"
-                                            }}>09:00</Text>
-                                            <Text style={{
-                                                fontSize: Sizes.action,
-                                                fontFamily: "Inter-Regular",
-                                                color: Colors.gray,
-                                                marginTop: 10
-                                            }}>Start Shift</Text>
-                                        </View>
-                                        <View style={{
-                                            backgroundColor: Colors.lightGreen,
-                                            padding: 8,
-                                            borderRadius: 12,
-                                        }}> 
-                                            <InGreenIcon/>
-                                        </View>
-                                    </View>
-                                </View>
+                            {todayAttendances.map((today, index) => (
+                                <Card
+                                    label={today.label}
+                                    value={today.value}
+                                    icon={today.icon}
+                                    color={today.color}
+                                />
                             ))}
                         </View>
                     </View>
