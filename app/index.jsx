@@ -89,7 +89,7 @@ export default function Home() {
                                 fontSize: Sizes.title,
                                 fontFamily: "Inter-SemiBold"
                             }}>Attendance Recent</Text>
-                            <Link href="/" style={{
+                            <Link href="/history" style={{
                                 color: Colors.gray,
                                 fontSize: Sizes.action,
                                 fontFamily: "Inter-Regular"
