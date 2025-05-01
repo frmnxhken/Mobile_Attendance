@@ -3,6 +3,7 @@ import { View, Text, Image } from "react-native";
 import Colors from "../../constants/Colors";
 
 import BellIcon from "../../assets/Icons/BellIcon";
+import { Link } from "expo-router";
 
 const HeaderProfile = () => {
     return (
@@ -15,15 +16,17 @@ const HeaderProfile = () => {
                 flexDirection: "row",
                 alignItems: "center"
             }}>
-                <Image
-                    source={{ uri: "https://upload.wikimedia.org/wikipedia/commons/0/08/Aespa_Karina_2024_MMA_2.jpg" }}
-                    style={{
-                        width: 46,
-                        height: 46,
-                        resizeMode: "cover",
-                        borderRadius: 100
-                    }}
-                />
+                <Link href="/profile">
+                    <Image
+                        source={{ uri: "https://upload.wikimedia.org/wikipedia/commons/0/08/Aespa_Karina_2024_MMA_2.jpg" }}
+                        style={{
+                            width: 46,
+                            height: 46,
+                            resizeMode: "cover",
+                            borderRadius: 100
+                        }}
+                    />
+                </Link>
                 <View style={{
                     marginLeft: 10
                 }}>
