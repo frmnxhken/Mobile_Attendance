@@ -2,28 +2,36 @@ import React from "react";
 import { SafeAreaView, Text, View, ScrollView, Image } from "react-native";
 import HeaderBar from "../../components/ui/HeaderBar";
 import Button from "../../components/ui/Button";
+import { Link } from "expo-router";
 
 const Profile = () => {
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={{
+          flex: 1,
+          backgroundColor: '#fff',}}>
             <HeaderBar name="Profile"/>
             <ScrollView>
-                <View style={styles.profileHeader}>
-                    <Image
-                        source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/0/08/Aespa_Karina_2024_MMA_2.jpg' }} // Ganti dengan gambar asli
-                        style={styles.avatar}
-                    />
-                    <Text style={styles.Title}>Karina Blue</Text>
-                    <Button text="Edit Profile" style={styles.editButton}/>
+                <View style={styles.container}>
+                  <View style={styles.profileHeader}>
+                      <Image
+                          source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/0/08/Aespa_Karina_2024_MMA_2.jpg' }} // Ganti dengan gambar asli
+                          style={styles.avatar}
+                      />
+                      <Text style={styles.Title}>Karina Blue</Text>
+                      <Button text="Edit Profile" style={styles.editButton}/>
+                  </View>
+                  <Text style={styles.Title}>Personal Infornation</Text>
+                  {InfoProfile({ label: 'Email', value: 'sitinurmala@gmail.com' })}
+                  {InfoProfile({ label: 'Address', value: 'Jl. Suropati Timur' })}
+                  {InfoProfile({ label: 'Gender', value: 'Female' })}
+                  {InfoProfile({ label: 'NIP', value: '28920239' })}
+                  {InfoProfile({ label: 'Office', value: 'Baron Ofc1' })}
                 </View>
-                <Text style={styles.Title}>Personal Infornation</Text>
-                {InfoProfile({ label: 'Email', value: 'sitinurmala@gmail.com' })}
-                {InfoProfile({ label: 'Address', value: 'Jl. Suropati Timur' })}
-                {InfoProfile({ label: 'Gender', value: 'Female' })}
-                {InfoProfile({ label: 'NIP', value: '28920239' })}
-                {InfoProfile({ label: 'Office', value: 'Baron Ofc1' })}
+                <Link href="/signin">signIn</Link>
+                <Link href="/notification">Notification</Link>
             </ScrollView>
             <View style={{
+                paddingHorizontal: 20,
                 alignItems: "center",
                 columnGap: 10,
                 paddingVertical: 10,
@@ -49,7 +57,6 @@ const InfoProfile = ({ label, value }) => {
 const styles = {
     container: {
         flex: 1,
-        backgroundColor: '#fff',
         paddingHorizontal: 20,
         
       },
