@@ -1,27 +1,34 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-import { Link } from 'expo-router'
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
+import { Link } from "expo-router";
 
-import ArrowLeftIcon from "../../assets/Icons/ArrowLeftIcon";
+import ArrowLeftIcon from "@/assets/Icons/ArrowLeftIcon";
+import Sizes from "@/constants/Sizes";
 
 const HeaderBar = (props) => {
   return (
-    <View style={{
-      flexDirection: "row",
-      alignItems: "center",
-      height: 50,
-    }}>
+    <View style={styles.container}>
       <Link href="/">
-        <ArrowLeftIcon/>
+        <ArrowLeftIcon />
       </Link>
-      <Text style={{
-        textAlign: "center",
-        margin: "auto",
-        paddingRight: 20,
-        fontFamily: "Inter-Medium"
-      }}>{props.name}</Text>
+      <Text style={styles.headerText}>{props.name}</Text>
     </View>
-  )
-}
+  );
+};
 
-export default HeaderBar
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    alignItems: "center",
+    height: 50,
+  },
+  headerText: {
+    textAlign: "center",
+    margin: "auto",
+    paddingRight: 20,
+    fontFamily: "Inter-Medium",
+    fontSize: Sizes.header,
+  },
+});
+
+export default HeaderBar;
