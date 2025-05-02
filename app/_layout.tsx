@@ -13,6 +13,7 @@ export default function RootLayout() {
       <StatusBar hidden={false}/>
       <Stack>
         <Stack.Screen name="index" options={{ headerShown: false}} />
+        <Stack.Screen name="presention/index" options={{ headerShown: false}} />
         <Stack.Screen name="signin/index" options={{ headerShown: false}} />
         <Stack.Screen name="history/index" options={{ headerShown: false}} />
         <Stack.Screen name="profile/index" options={{ headerShown: false}} />

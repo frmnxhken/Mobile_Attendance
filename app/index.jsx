@@ -1,7 +1,6 @@
 import React from "react";
 import { Text, View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import { Link } from "expo-router";
-
+import { Link, useRouter } from "expo-router";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import ListItem from "@/components/ui/ListItem";
@@ -13,6 +12,8 @@ import Colors from "@/constants/Colors";
 import { todayAttendances } from "@/constants/Data";
 
 const Home = () => {
+    const router = useRouter();
+
     return (
         <SafeAreaView style={styles.wrapper}>
             <ScrollView>
@@ -50,7 +51,7 @@ const Home = () => {
             </ScrollView>
             <View style={styles.CTAContainer}>
                 <Button text="Excused" type="dark" style={{width: "48%"}}/>
-                <Button text="Checkin" style={{width: "48%"}}/>
+                <Button text="Checkin" onPress={() => router.navigate("/presention")} style={{width: "48%"}}/>
             </View>
         </SafeAreaView>
     )
