@@ -3,6 +3,8 @@ import { SafeAreaView, Text, View, ScrollView, Image } from "react-native";
 import HeaderBar from "../../components/ui/HeaderBar";
 import Button from "../../components/ui/Button";
 import { Link } from "expo-router";
+import Sizes from "@/constants/Sizes";
+import Colors from "@/constants/Colors";
 
 const Profile = () => {
     return (
@@ -60,51 +62,51 @@ const styles = {
         paddingHorizontal: 20,
         
       },
-      profileHeader: {
-        marginTop: 20,
-        alignItems: 'center',
-        marginBottom: 30,
-      },
-      avatar: {
-        width: 100,
-        height: 100,
-        borderRadius: 50,
-      },
-      Title: {
-        fontSize: 20,
-        fontWeight: '700',
-        marginTop: 10,
-        color: '#111827',
-      },
-      editButton: {
-        backgroundColor: '#000',
-        borderRadius: 20,
-        paddingVertical: 6,
-        paddingHorizontal: 16,
-        marginTop: 8,
-      },
-      infoBox: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        backgroundColor: '#fff',
-        borderRadius: 12,
-        paddingHorizontal: 26,
-        paddingVertical: 15,
-        marginTop: 15,
-        shadowColor: "rgba(4, 35, 129, 0.43)",
-        elevation: 10,
-      },
-      label: {
-        fontSize: 13,
-        color: '#101828',
-        marginBottom: 4,
-      },
-      Value: {
-        fontSize: 13,
-        color: '#6A7282',
-        marginBottom: 4,
-      },
+    profileHeader: {
+      marginTop: 20,
+      alignItems: 'center',
+      marginBottom: 30,
+    },
+    avatar: {
+      width: 100,
+      height: 100,
+      borderRadius: 50,
+    },
+    Title: {
+      fontSize: 20,
+      fontWeight: '700',
+      marginTop: 10,
+      color: '#111827',
+    },
+    editButton: {
+      backgroundColor: '#000',
+      borderRadius: 20,
+      paddingVertical: 6,
+      paddingHorizontal: 16,
+      marginTop: 8,
+    },
+    infoBox: {
+      flex: 1,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      backgroundColor: '#fff',
+      borderRadius: 12,
+      paddingHorizontal: 26,
+      paddingVertical: 15,
+      marginTop: 15,
+      shadowColor: "rgba(4, 35, 129, 0.43)",
+      elevation: 10,
+    },
+    label: {
+      fontSize: 13,
+      color: '#101828',
+      marginBottom: 4,
+    },
+    Value: {
+      fontSize: 13,
+      color: '#6A7282',
+      marginBottom: 4,
+    },
 }
 
 export default Profile
