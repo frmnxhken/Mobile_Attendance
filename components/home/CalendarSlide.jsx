@@ -3,9 +3,10 @@ import { View, Text, ScrollView, StyleSheet } from "react-native";
 
 import Colors from "@/constants/Colors";
 import Sizes from "@/constants/Sizes";
-import { weekData } from "@/constants/Data";
+import { getWeeklyRange } from "@/utils/dateHelpers";
 
 const CalendarSlide = () => {
+    const weekData = getWeeklyRange();
     return (
         <ScrollView
             horizontal={true}

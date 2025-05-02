@@ -34,6 +34,7 @@ const Presention = () => {
     return (
       <View style={styles.container}>
         <Text style={styles.message}>We need your permission to show the camera</Text>
+        <Button text="Grant Permission" onPress={requestPermission} />
       </View>
     );
   }
