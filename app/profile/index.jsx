@@ -2,6 +2,7 @@ import React from "react";
 import { SafeAreaView, Text, View, ScrollView, Image } from "react-native";
 import HeaderBar from "../../components/ui/HeaderBar";
 import Button from "../../components/ui/Button";
+import { Link } from "expo-router";
 
 const Profile = () => {
     return (
@@ -26,6 +27,8 @@ const Profile = () => {
                   {InfoProfile({ label: 'NIP', value: '28920239' })}
                   {InfoProfile({ label: 'Office', value: 'Baron Ofc1' })}
                 </View>
+                <Link href="/signin">signIn</Link>
+                <Link href="/notification">Notification</Link>
             </ScrollView>
             <View style={{
                 paddingHorizontal: 20,
