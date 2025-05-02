@@ -1,58 +1,25 @@
 import React from "react";
-import { SafeAreaView, ScrollView, Text, View } from "react-native";
-import HeaderBar from "../../components/ui/HeaderBar";
-import Card from "../../components/ui/Card";
-import Sizes from "../../constants/Sizes";
-import ListItem from "../../components/ui/ListItem";
+import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
+
+import Card from "@/components/ui/Card";
+import HeaderBar from "@/components/ui/HeaderBar";
+import ListItem from "@/components/ui/ListItem";
+
+import Sizes from "@/constants/Sizes";
+import { attendances } from "@/constants/Data";
 
 const History = () => {
-    const attendances = [
-        {
-            "label": "Present",
-            "value": "24",
-            "icon": "checked",
-            "color": "lightGreen"
-        },
-        {
-            "label": "Total Late",
-            "value": "03",
-            "icon": "time",
-            "color": "lightBlue"
-        },
-        {
-            "label": "Total Excused",
-            "value": "02",
-            "icon": "envelope",
-            "color": "yellow"
-        },
-        {
-            "label": "Total Absent",
-            "value": "01",
-            "icon": "danger",
-            "color": "pink"
-        },
-    ]
     return (
-        <SafeAreaView style={{
-            flex: 1,
-            backgroundColor: "#fff",
-        }}>
+        <SafeAreaView style={styles.wrapper}>
             <ScrollView>
                 <View style={{
                     paddingHorizontal: 15,
-                    paddingBottom: 40
+                    paddingBottom: 40,
                 }}>
                     <HeaderBar 
                         name="History Attendance"
                     />
-                    <View style={{
-                        flexWrap: "wrap",
-                        justifyContent: "space-between",
-                        flexDirection: "row",
-                        columnGap: 10,
-                        rowGap: 20,
-                        marginTop: 15
-                    }}>
+                    <View style={styles.statisticContainer}>
                         {attendances.map((attendance, index) => (
                             <Card
                                 key={index}
@@ -63,18 +30,9 @@ const History = () => {
                             />
                         ))}
                     </View>
-                    <View style={{
-                        marginTop: 30
-                    }}>
-                        <Text style={{
-                            fontSize: Sizes.title,
-                            fontFamily: "Inter-SemiBold"
-                        }}>Attendances</Text>
-                        <View style={{
-                            marginTop: 15,
-                            flex: 1,
-                            rowGap: 15
-                        }}>
+                    <View style={{marginTop: 30}}>
+                        <Text style={styles.headerTitle}>Attendances</Text>
+                        <View style={styles.attendanceContainer}>
                             {[1, 2, 3, 4, 5, 6, 7, 8].map((_, index) => (
                                 <ListItem
                                     key={index}
@@ -88,4 +46,28 @@ const History = () => {
     )
 }
 
-export default History
+const styles = StyleSheet.create({
+    wrapper: {
+        flex: 1,
+        backgroundColor: "#fff"
+    },
+    statisticContainer: {
+        flexWrap: "wrap",
+        justifyContent: "space-between",
+        flexDirection: "row",
+        columnGap: 10,
+        rowGap: 20,
+        marginTop: 15
+    },
+    headerTitle: {
+        fontSize: Sizes.title,
+        fontFamily: "Inter-SemiBold"
+    },
+    attendanceContainer: {
+        marginTop: 15,
+        flex: 1,
+        rowGap: 15
+    }
+});
+
+export default History;

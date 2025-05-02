@@ -1,74 +1,27 @@
 import React from "react";
-import { Text, View, SafeAreaView, ScrollView } from "react-native";
-import HeaderProfile from "../components/ui/HeaderProfile";
-import CalendarSlide from "../components/home/CalendarSlide";
-import Card from "../components/ui/Card";
-import Button from "../components/ui/Button";
-import Sizes from "../constants/Sizes";
+import { Text, View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { Link } from "expo-router";
-import Colors from "../constants/Colors";
-import ListItem from "../components/ui/ListItem";
 
+import Card from "@/components/ui/Card";
+import Button from "@/components/ui/Button";
+import ListItem from "@/components/ui/ListItem";
+import HeaderProfile from "@/components/ui/HeaderProfile";
+import CalendarSlide from "@/components/home/CalendarSlide";
 
-export default function Home() {
-    const todayAttendances = [
-        {
-            "label": "Start Shift",
-            "value": "09:00",
-            "icon": "checkin",
-            "color": "lightGreen"
-        },
-        {
-            "label": "End Shift",
-            "value": "15:00",
-            "icon": "checkout",
-            "color": "pink"
-        },
-        {
-            "label": "Time Off",
-            "value": "54%",
-            "icon": "clock",
-            "color": "yellow"
-        },
-        {
-            "label": "Total Attended",
-            "value": "12 Days",
-            "icon": "calendar",
-            "color": "lightBlue"
-        },
-    ]
+import Sizes from "@/constants/Sizes";
+import Colors from "@/constants/Colors";
+import { todayAttendances } from "@/constants/Data";
+
+const Home = () => {
     return (
-        <SafeAreaView style={{
-            flex: 1,
-            backgroundColor: "#fff",
-        }}>
+        <SafeAreaView style={styles.wrapper}>
             <ScrollView>
-                <View style={{
-                    paddingHorizontal: 15,
-                }}>
-                    <HeaderProfile/>
-                </View>
+                <HeaderProfile/>
                 <CalendarSlide/>
-                <View style={{
-                    paddingHorizontal: 15,
-                    paddingBottom: 40
-                }}>
-                    <View style={{
-                        marginTop: 10,
-                        marginBottom: 30
-                    }}>
-                        <Text style={{
-                            fontSize: Sizes.title,
-                            fontFamily: "Inter-SemiBold"
-                        }}>Today Attendance</Text>
-                        <View style={{
-                            flexWrap: "wrap",
-                            justifyContent: "space-between",
-                            flexDirection: "row",
-                            columnGap: 10,
-                            rowGap: 20,
-                            marginTop: 15
-                        }}>
+                <View style={styles.sectionSpace}>
+                    <View>
+                        <Text style={styles.headerTitle}>Today Attendance</Text>
+                        <View style={styles.statisticContainer}>
                             {todayAttendances.map((today, index) => (
                                 <Card
                                     key={index}
@@ -81,26 +34,11 @@ export default function Home() {
                         </View>
                     </View>
                     <View>
-                        <View style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent: "space-between"
-                        }}>
-                            <Text style={{
-                                fontSize: Sizes.title,
-                                fontFamily: "Inter-SemiBold"
-                            }}>Attendance Recent</Text>
-                            <Link href="/history" style={{
-                                color: Colors.gray,
-                                fontSize: Sizes.action,
-                                fontFamily: "Inter-Regular"
-                            }}>View All</Link>
+                        <View style={styles.headerContainer}>
+                            <Text style={styles.headerTitle}>Attendance Recent</Text>
+                            <Link href="/history" style={styles.actionText}>View All</Link>
                         </View>
-                        <View style={{
-                            flex: 1,
-                            rowGap: 15,
-                            marginTop: 15
-                        }}>
+                        <View style={styles.recentContainer}>
                             {[1,2,3,4,5].map((_, index) => (
                                 <ListItem
                                     key={index}
@@ -110,16 +48,60 @@ export default function Home() {
                     </View>
                 </View>
             </ScrollView>
-            <View style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                columnGap: 10,
-                paddingVertical: 10,
-                paddingHorizontal: 15
-            }}>
+            <View style={styles.CTAContainer}>
                 <Button text="Excused" type="dark" style={{width: "48%"}}/>
                 <Button text="Checkin" style={{width: "48%"}}/>
             </View>
         </SafeAreaView>
     )
 }
+
+const styles = StyleSheet.create({
+    wrapper: {
+        flex: 1,
+        backgroundColor: "#fff"
+    },
+    sectionSpace: {
+        paddingHorizontal: 15,
+        paddingBottom: 40,
+        flexDirection: "column",
+        rowGap: 30
+    },
+    headerTitle: {
+        fontSize: Sizes.title,
+        fontFamily: "Inter-SemiBold"
+    },
+    actionText: {
+        color: Colors.gray,
+        fontSize: Sizes.action,
+        fontFamily: "Inter-Regular"
+    },
+    headerContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between"
+    },
+    recentContainer: {
+        flex: 1,
+        rowGap: 15,
+        marginTop: 15
+    },
+    statisticContainer: {
+        flexWrap: "wrap",
+        justifyContent: "space-between",
+        flexDirection: "row",
+        columnGap: 10,
+        rowGap: 20,
+        marginTop: 15
+    },
+    CTAContainer: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        columnGap: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 15
+    }
+});
+
+
+export default Home;

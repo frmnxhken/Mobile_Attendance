@@ -1,7 +1,8 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-import Colors from '../../constants/Colors'
-import Sizes from '../../constants/Sizes'
+import React from "react";
+import { View, Text } from "react-native";
+
+import Colors from "@/constants/Colors";
+import Sizes from "@/constants/Sizes";
 
 const Badge = () => {
   return (

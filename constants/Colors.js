@@ -10,7 +10,8 @@ const Colors = {
   lightGreen: "#B9F8CF",
   pink: "#FFCCD3",
   yellow: "#FFF085",
-  gray: "#6A7282"
+  gray: "#6A7282",
+  shadow: "#6F80B2",
 };
 
 export default Colors;
