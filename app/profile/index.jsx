@@ -23,8 +23,16 @@ const Profile = () => {
                 {InfoProfile({ label: 'NIP', value: '28920239' })}
                 {InfoProfile({ label: 'Office', value: 'Baron Ofc1' })}
             </ScrollView>
-            <Button/>
-            <Button/>
+            <View style={{
+                alignItems: "center",
+                columnGap: 10,
+                paddingVertical: 10,
+                paddingBottom: 20,
+                gap: 10
+            }}>
+                <Button text="Change Password" style={{width: "100%"}}/>
+                <Button text="Logout" type="dark" style={{width: "100%"}}/>
+            </View>
         </SafeAreaView>
     )
 }
@@ -40,9 +48,9 @@ const InfoProfile = ({ label, value }) => {
 
 const styles = {
     container: {
+        flex: 1,
         backgroundColor: '#fff',
         paddingHorizontal: 20,
-        paddingVertical: 20,
         
       },
       profileHeader: {
