@@ -22,8 +22,8 @@ export const todayAttendances = [
         "value": "12 Days",
         "icon": "calendar",
         "color": "lightBlue"
-    },
-]
+    }
+];
 
 export const weekData = [
     { date: "28", day: "Mon" },
@@ -32,7 +32,7 @@ export const weekData = [
     { date: "01", day: "Thu" },
     { date: "02", day: "Fri" },
     { date: "03", day: "Sat" },
-    { date: "04", day: "Sun" },
+    { date: "04", day: "Sun" }
 ];
 
 export const attendances = [
@@ -59,5 +59,14 @@ export const attendances = [
         "value": "01",
         "icon": "danger",
         "color": "pink"
-    },
-]
+    }
+];
+
+export const profiles = [
+    { "label": "Email", "value": "sitinurmala@gmail.com" },
+    { "label": "Address", "value": "Jl. Suropati Timur" },
+    { "label": "Gender", "value": "Female" },
+    { "label": "NIP", "value": "28920239" },
+    { "label": "Office", "value": "Baron Ofc1" }
+];
+  

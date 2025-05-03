@@ -4,7 +4,7 @@ import * as Location from "expo-location";
 import { CameraView, useCameraPermissions } from "expo-camera";
 
 import Button from "@/components/ui/Button";
-import HeaderBar from "@/components/ui/HeaderBar"
+import HeaderBar from "@/components/ui/HeaderBar";
 
 import Sizes from "@/constants/Sizes";
 
@@ -57,15 +57,15 @@ const Presention = () => {
         <View style={styles.informationContainer}>
           <View style={styles.informationItem}>
             <FlagGrayIcon />
-            <Text>0.2km</Text>
+            <Text style={styles.bodyText}>0.2km</Text>
           </View>
           <View style={styles.informationItem}>
             <ClockGrayIcon />
-            <Text>08:53</Text>
+            <Text style={styles.bodyText}>08:53</Text>
           </View>
           <View style={styles.informationItem}>
             <CalendarGrayIcon />
-            <Text>30 April</Text>
+            <Text style={styles.bodyText}>30 April</Text>
           </View>
         </View>
         <Button text="Checkin" />
