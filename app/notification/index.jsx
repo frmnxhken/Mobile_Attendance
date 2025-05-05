@@ -1,8 +1,10 @@
 import React from "react";
+import { useRouter } from "expo-router";
 import Notification from "@/components/screens/Notification";
 
 const NotificationScreen = () => {
-  return <Notification />;
+const router = useRouter();
+  return <Notification onPress={() => router.navigate("/notification/message")}/>;
 };
 
 export default NotificationScreen;
