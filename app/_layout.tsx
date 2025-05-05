@@ -18,6 +18,7 @@ export default function RootLayout() {
         <Stack.Screen name="history/index" options={{ headerShown: false}} />
         <Stack.Screen name="profile/index" options={{ headerShown: false}} />
         <Stack.Screen name="notification/index" options={{ headerShown: false}} />
+        <Stack.Screen name="notification/message" options={{ headerShown: false}} />
       </Stack>
     </>
   );
