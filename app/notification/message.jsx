@@ -26,6 +26,13 @@ const Notification = () => {
                         description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod empor incididunt ut labore et dolore magna aliqua."
                         time="09:00 AM"
                     />
+                    <Text style={styles.Title}>26 April 2025</Text>
+                    <MessageCard
+                        title="Lorem ipsum dolor sit amet"
+                        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod empor incididunt ut labore et dolore magna aliqua."
+                        time="09:00 AM"
+                    />
+
                 </View>
             </ScrollView>
         </SafeAreaView>
