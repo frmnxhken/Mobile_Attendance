@@ -20,7 +20,9 @@ const HeaderProfile = () => {
                     <Text style={styles.headerText}>Karina</Text>
                 </View>
             </View>
-            <BellIcon/>
+            <Link href="/notification">
+                <BellIcon/>
+            </Link>
         </View>
     )
 }
