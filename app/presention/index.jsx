@@ -6,8 +6,11 @@ import { CameraView, useCameraPermissions } from "expo-camera";
 import Button from "@/components/ui/Button";
 import HeaderBar from "@/components/ui/HeaderBar";
 
+import Notification from "@/components/screens/Notification";
+
 import Sizes from "@/constants/Sizes";
 
+import CameraPermission from "@/assets/Icons/CameraPermission";
 import FlagGrayIcon from "@/assets/Icons/FlagGrayIcon";
 import ClockGrayIcon from "@/assets/Icons/ClockGrayIcon";
 import CalendarGrayIcon from "@/assets/Icons/CalendarGrayIcon";
@@ -32,10 +35,14 @@ const Presention = () => {
 
   if (!permission.granted) {
     return (
-      <View style={styles.container}>
-        <Text style={styles.message}>We need your permission to show the camera</Text>
-        <Button text="Grant Permission" onPress={requestPermission} />
-      </View>
+      <Notification
+        header="Attendance"
+        title="Allow Camera Access"
+        description="Camera access is needed to take a photo as proof of your attendance"
+        buttonText="Grant Permission"
+        icon={<CameraPermission />}
+        onPress={requestPermission}
+      />
     );
   }
 
