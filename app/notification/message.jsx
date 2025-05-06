@@ -1,7 +1,9 @@
 import React from "react";
 import { SafeAreaView, Text, View, ScrollView } from "react-native";
+
 import HeaderBar from "@/components/ui/HeaderBar";
 import MessageCard from "../../components/ui/MessageCard";
+
 import Sizes from "@/constants/Sizes";
 import Colors from "@/constants/Colors";
 
