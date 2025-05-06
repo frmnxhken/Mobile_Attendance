@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Badge from './Badge';
+import Colors from "@/constants/Colors";
 
 const MessageCard = ({ title, description, time, badge = false, badgeText = "New", badgeColor = "red" }) => {
   return (
@@ -26,14 +27,15 @@ const MessageCard = ({ title, description, time, badge = false, badgeText = "New
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#fff',
+    backgroundColor: "white",
     borderRadius: 12,
+    shadowColor: Colors.shadow,
     padding: 16,
-    shadowColor: '#000',
-    shadowOpacity: 0.05,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 8,
-    elevation: 2,
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.1,
+    shadowRadius: 13,
+    elevation: 13,
+    
   },
   row: {
     flexDirection: 'row',
