@@ -13,10 +13,10 @@ const ListItem = (props) => {
     <View style={styles.card}>
       <View style={styles.container}>
         <View>
-          <Text style={styles.headerText}>29 April</Text>
+          <Text style={styles.headerText}>{props.date}</Text>
           <View style={styles.space}>
             <InGrayIcon />
-            <Text style={styles.actionText}>09:00</Text>
+            <Text style={styles.actionText}>{props.checkin}</Text>
           </View>
         </View>
         <View>
@@ -26,7 +26,7 @@ const ListItem = (props) => {
             justifyContent: "flex-end"
           }]}>
             <OutGrayIcon />
-            <Text style={styles.actionText}>15:00</Text>
+            <Text style={styles.actionText}>{props.checkout}</Text>
           </View>
         </View>
       </View>

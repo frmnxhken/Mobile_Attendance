@@ -1,5 +1,6 @@
 import React from "react";
 import { SafeAreaView, Text, View, ScrollView, Image, StyleSheet } from "react-native";
+import { useRouter } from "expo-router";
 
 import Button from "@/components/ui/Button";
 import InfoBox from "@/components/ui/InfoBox";
@@ -9,6 +10,7 @@ import Sizes from "@/constants/Sizes";
 import { profiles } from "@/constants/Data";
 
 const Profile = () => {
+  const router = useRouter();
   return (
     <SafeAreaView style={styles.wrapper}>
       <ScrollView>
@@ -38,7 +40,7 @@ const Profile = () => {
       </ScrollView>
       <View style={styles.CTAContainer}>
         <Button text="Change Password" style={{ width: "100%" }} />
-        <Button text="Logout" type="secondary" style={{ width: "100%" }} />
+        <Button onPress={() => router.navigate("/signin")} text="Logout" type="secondary" style={{ width: "100%" }} />
       </View>
     </SafeAreaView>
   )

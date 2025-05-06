@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
 
 import Card from "@/components/ui/Card";
@@ -6,9 +6,18 @@ import HeaderBar from "@/components/ui/HeaderBar";
 import ListItem from "@/components/ui/ListItem";
 
 import Sizes from "@/constants/Sizes";
-import { attendances } from "@/constants/Data";
+import { getAttendanceHistory } from "@/services/HistoryService";
 
 const History = () => {
+    const [data, setData] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        getAttendanceHistory().then(response => {
+            setData(response.data)
+        }).finally(() => setLoading(false))
+    }, []);
+
     return (
         <SafeAreaView style={styles.wrapper}>
             <ScrollView>
@@ -16,28 +25,27 @@ const History = () => {
                     paddingHorizontal: 15,
                     paddingBottom: 40,
                 }}>
-                    <HeaderBar 
+                    <HeaderBar
                         name="History Attendance"
                     />
                     <View style={styles.statisticContainer}>
-                        {attendances.map((attendance, index) => (
-                            <Card
-                                key={index}
-                                label={attendance.label}
-                                value={attendance.value}
-                                icon={attendance.icon}
-                                color={attendance.color}
-                            />
-                        ))}
+                    <Card label="Present" value={data?.statistic?.present} icon="checked" color="lightGreen" />
+                        <Card label="Total late" value={data?.statistic?.late} icon="time" color="lightBlue" />
+                        <Card label="Excused" value={data?.statistic?.excused} icon="envelope" color="yellow" />
+                        <Card label="Total absent" value={data?.statistic?.absent} icon="danger" color="pink" />
                     </View>
-                    <View style={{marginTop: 30}}>
+                    <View style={{ marginTop: 30 }}>
                         <Text style={styles.headerTitle}>Attendances</Text>
                         <View style={styles.attendanceContainer}>
-                            {[1, 2, 3, 4, 5, 6, 7, 8].map((_, index) => (
-                                <ListItem
-                                    key={index}
-                                />
-                            ))}
+                            {loading ? (
+                                <Text>Loading...</Text>
+                            ) : data?.histories?.length > 0 ? (
+                                data.histories.map((history, index) => (
+                                    <ListItem key={index} {...history} />
+                                ))
+                            ) : (
+                                <Text>No attendance history found.</Text>
+                            )}
                         </View>
                     </View>
                 </View>
