@@ -6,15 +6,12 @@ import { CameraView, useCameraPermissions } from "expo-camera";
 import Button from "@/components/ui/Button";
 import HeaderBar from "@/components/ui/HeaderBar";
 import Notification from "@/components/screens/Notification";
+import InfoBar from "@/components/attendance/InfoBar";
 
-import Sizes from "@/constants/Sizes";
 import { postCheckIn, postCheckOut, getCheckStatus } from "@/services/AttendanceService";
 import { getDateTime, formatToDayMonth } from "@/utils/dateHelpers";
 
 import CameraPermission from "@/assets/Icons/CameraPermission";
-import FlagGrayIcon from "@/assets/Icons/FlagGrayIcon";
-import ClockGrayIcon from "@/assets/Icons/ClockGrayIcon";
-import CalendarGrayIcon from "@/assets/Icons/CalendarGrayIcon";
 
 const Presention = () => {
   const [permission, requestPermission] = useCameraPermissions();
@@ -44,33 +41,26 @@ const Presention = () => {
     })();
   }, []);
 
-  const handleCheckIn = async () => {
-    if (!cameraRef) return;
+  const handleAttendance = async (type) => {
+    if (!cameraRef || !location) return;
     const photo = await cameraRef.current.takePictureAsync();
+
+    const payload = {
+      uri: photo.uri,
+      time: dateTime.time,
+      date: dateTime.today,
+      lat: location.latitude.toFixed(5),
+      long: location.longitude.toFixed(5),
+    };
+
     try {
-      const response = await postCheckIn({
-        uri: photo.uri,
-        checkin: dateTime.time,
-        date: dateTime.today,
-        lat: location.latitude.toFixed(5),
-        long: location.longitude.toFixed(5),
-      });
-    } catch (e) {
-      return;
-    }
-  }
-  
-  const handleCheckOut = async () => {
-    if (!cameraRef) return;
-    const photo = await cameraRef.current.takePictureAsync();
-    try {
-      const response = await postCheckOut({
-        uri: photo.uri,
-        checkout: dateTime.time,  
-        date: dateTime.today,
-        lat: location.latitude.toFixed(5),
-        long: location.longitude.toFixed(5),
-      });
+      if (type === "checkin") {
+        await postCheckIn(payload);
+      } else {
+        await postCheckOut(payload);
+      }
+      const response = await getCheckStatus();
+      setAttendance(response.data.attendance);
     } catch (e) {
       return;
     }
@@ -108,27 +98,16 @@ const Presention = () => {
             </Text>
           </View>
         </CameraView>
-        <View style={styles.informationContainer}>
-          <View style={styles.informationItem}>
-            <FlagGrayIcon />
-            <Text style={styles.bodyText}>0.2km</Text>
-          </View>
-          <View style={styles.informationItem}>
-            <ClockGrayIcon />
-            <Text style={styles.bodyText}>{dateTime.time}</Text>
-          </View>
-          <View style={styles.informationItem}>
-            <CalendarGrayIcon />
-            <Text style={styles.bodyText}>
-              {formatToDayMonth(dateTime.today)}
-            </Text>
-          </View>
-        </View>
+        <InfoBar
+          distance="0.2"
+          time={dateTime.time}
+          date={formatToDayMonth(dateTime.today)}
+        />
         {attendance === "checkin" && (
-          <Button text="Check In" onPress={handleCheckIn} />
+          <Button text="Check In" onPress={() => handleAttendance("checkin")} />
         )}
         {attendance === "checkout" && (
-          <Button text="Check Out" type="dark" onPress={handleCheckOut} />
+          <Button text="Check Out" type="dark" onPress={() => handleAttendance("checkout")} />
         )}
         {attendance === "done" && (
           <Button text="Already Checked Out" disabled />
@@ -165,21 +144,6 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0,0,0,0.5)",
     padding: 6,
     borderRadius: 8,
-  },
-  informationContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginVertical: 15
-  },
-  informationItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    columnGap: 5
-  },
-  bodyText: {
-    fontSize: Sizes.body,
-    fontFamily: "Inter-Regular"
   }
 });
 

@@ -1,9 +1,9 @@
 import Api from "./Api";
 
-export const postCheckIn = async ({ uri, checkin, date, lat, long }) => {
+export const postCheckIn = async ({ uri, time, date, lat, long }) => {
     const formData = new FormData();
   
-    formData.append("checkin", checkin);
+    formData.append("checkin", time);
     formData.append("date", date);
     formData.append("checkin_photo", {
       uri,
@@ -17,10 +17,10 @@ export const postCheckIn = async ({ uri, checkin, date, lat, long }) => {
     return response;
 } 
 
-export const postCheckOut = async ({ uri, checkout, date, lat, long }) => {
+export const postCheckOut = async ({ uri, time, date, lat, long }) => {
     const formData = new FormData();
   
-    formData.append("checkout", checkout);
+    formData.append("checkout", time);
     formData.append("date", date);
     formData.append("checkout_photo", {
       uri,
