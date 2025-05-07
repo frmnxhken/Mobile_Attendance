@@ -42,7 +42,7 @@ const ChangePassword = () => {
     <SafeAreaView style={styles.wrapper}>
       <ScrollView>
         <View style={styles.container}>
-          <HeaderBar name="Create New Password" />
+          <HeaderBar/>
           <View style={styles.formContainer}>
             <Text style={styles.headerTitle}>Create New Password</Text>
             <Text style={styles.subtitleText}>Create your new password below.</Text>
