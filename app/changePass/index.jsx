@@ -9,7 +9,7 @@ import Sizes from "@/constants/Sizes";
 import Colors from "@/constants/Colors";
 import { profiles } from "@/constants/Data";
 
-const EditProfile = () => {
+const ChangePass = () => {
   const router = useRouter();
   return (
     <SafeAreaView style={styles.wrapper}>
@@ -83,4 +83,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default EditProfile;
+export default ChangePass;
