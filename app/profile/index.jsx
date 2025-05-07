@@ -22,7 +22,7 @@ const Profile = () => {
               style={styles.avatar}
             />
             <Text style={styles.titleText}>Karina Blue</Text>
-            <Button text="Edit Profile" style={styles.editButton} />
+            <Button text="Edit Profile" style={styles.editButton} onPress={() => router.navigate("/profile/edit")}/>
           </View>
           <View>
             <Text style={styles.titleText}>Personal Information</Text>
