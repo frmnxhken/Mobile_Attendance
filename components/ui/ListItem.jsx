@@ -7,13 +7,16 @@ import OutGrayIcon from "@/assets/Icons/OutGrayIcon";
 
 import Colors from "@/constants/Colors";
 import Sizes from "@/constants/Sizes";
+import { formatToDayMonth } from "@/utils/dateHelpers";
 
 const ListItem = (props) => {
   return (
     <View style={styles.card}>
       <View style={styles.container}>
         <View>
-          <Text style={styles.headerText}>{props.date}</Text>
+          <Text style={styles.headerText}>
+            {formatToDayMonth(props.date)}
+          </Text>
           <View style={styles.space}>
             <InGrayIcon />
             <Text style={styles.actionText}>{props.checkin}</Text>

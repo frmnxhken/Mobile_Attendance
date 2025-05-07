@@ -8,7 +8,7 @@ import HeaderBar from "@/components/ui/HeaderBar";
 import Notification from "@/components/screens/Notification";
 
 import Sizes from "@/constants/Sizes";
-import { postCheckIn } from "@/services/AttendanceService";
+import { postCheckIn, postCheckOut, getCheckStatus } from "@/services/AttendanceService";
 import { getDateTime, formatToDayMonth } from "@/utils/dateHelpers";
 
 import CameraPermission from "@/assets/Icons/CameraPermission";
@@ -19,6 +19,7 @@ import CalendarGrayIcon from "@/assets/Icons/CalendarGrayIcon";
 const Presention = () => {
   const [permission, requestPermission] = useCameraPermissions();
   const [location, setLocation] = useState(null);
+  const [attendance, setAttendance] = useState(null);
   const cameraRef = useRef(null);
   const dateTime = getDateTime();
 
@@ -28,6 +29,17 @@ const Presention = () => {
       if (status === "granted") {
         const loc = await Location.getCurrentPositionAsync({});
         setLocation(loc.coords);
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await getCheckStatus();
+        setAttendance(response.data.attendance);
+      } catch (e) {
+        return;
       }
     })();
   }, []);
@@ -44,10 +56,25 @@ const Presention = () => {
         long: location.longitude.toFixed(5),
       });
     } catch (e) {
-
+      return;
     }
   }
-
+  
+  const handleCheckOut = async () => {
+    if (!cameraRef) return;
+    const photo = await cameraRef.current.takePictureAsync();
+    try {
+      const response = await postCheckOut({
+        uri: photo.uri,
+        checkout: dateTime.time,  
+        date: dateTime.today,
+        lat: location.latitude.toFixed(5),
+        long: location.longitude.toFixed(5),
+      });
+    } catch (e) {
+      return;
+    }
+  }
 
   if (!permission) {
     return <View />;
@@ -97,7 +124,15 @@ const Presention = () => {
             </Text>
           </View>
         </View>
-        <Button text="Checkin" onPress={handleCheckIn} />
+        {attendance === "checkin" && (
+          <Button text="Check In" onPress={handleCheckIn} />
+        )}
+        {attendance === "checkout" && (
+          <Button text="Check Out" type="dark" onPress={handleCheckOut} />
+        )}
+        {attendance === "done" && (
+          <Button text="Already Checked Out" disabled />
+        )}
       </View>
     </SafeAreaView>
   );
