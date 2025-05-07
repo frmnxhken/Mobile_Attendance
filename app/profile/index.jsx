@@ -39,7 +39,7 @@ const Profile = () => {
         </View>
       </ScrollView>
       <View style={styles.CTAContainer}>
-        <Button text="Change Password" style={{ width: "100%" }} onPress={() => router.navigate("/changePass")}/>
+        <Button text="Change Password" style={{ width: "100%" }}/>
         <Button onPress={() => router.navigate("/signin")} text="Logout" type="secondary" style={{ width: "100%" }} />
       </View>
     </SafeAreaView>

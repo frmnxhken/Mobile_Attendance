@@ -21,7 +21,7 @@ export default function RootLayout() {
         <Stack.Screen name="notification/index" options={{ headerShown: false}} />
         <Stack.Screen name="notification/message" options={{ headerShown: false}} />
         <Stack.Screen name="forgotPass/index" options={{ headerShown: false}} />
-        <Stack.Screen name="forgotPass/SubmittedPass" options={{ headerShown: false}} />
+        <Stack.Screen name="forgotPass/submittedPass" options={{ headerShown: false}} />
         <Stack.Screen name="leave/index" options={{ headerShown: false}} />
       </Stack>
     </>

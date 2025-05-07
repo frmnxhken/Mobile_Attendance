@@ -13,7 +13,9 @@ const Notification = () => {
             flex: 1,
             backgroundColor: '#fff'
         }}>
-            <HeaderBar name="Notification"/>
+            <View style={styles.headerContainer}>
+                <HeaderBar name="Notification"/>
+            </View>
             <ScrollView>
                 <View style={styles.container}>
                     <Text style={styles.Title}>Today</Text>
@@ -48,6 +50,9 @@ const styles = {
         paddingVertical: 20,
         gap: 15,
         
+    },
+    headerContainer: {  
+        paddingHorizontal: 15
     },
     wrapText:{
         gap: 20,

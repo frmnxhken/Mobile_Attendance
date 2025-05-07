@@ -12,7 +12,7 @@ const ForgotPass = () => {
       description="Forgot your password? Submit a reset request and the admin will help you regain access"
       buttonText="Request Password Reset"
       icon={<LockIcon />}
-      onPress={() => router.navigate("/ForgotPass/SubmittedPass")}
+      onPress={() => router.navigate("/forgotPass/submittedPass")}
     />
   );
 };
