@@ -89,19 +89,19 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     marginTop: 30,
-    alignItems: 'center', // Center content horizontally
+    alignItems: 'center', 
   },
   headerTitle: {
     fontSize: Sizes.title,
     fontFamily: "Inter-SemiBold",
     marginBottom: 10,
-    textAlign: 'center', // Center the header text
+    textAlign: 'center', 
   },
   subtitleText: {
     fontSize: Sizes.body,
     fontFamily: "Inter-Regular",
     marginBottom: 20,
-    textAlign: 'center', // Center the subtitle text
+    textAlign: 'center', 
   },
   input: {
     width: "100%",
