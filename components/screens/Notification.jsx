@@ -15,8 +15,13 @@ const Notification = ({
   onPress = () => {},
 }) => {
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
-      <HeaderBar name={header} />
+    <SafeAreaView style={styles.wrapper}>
+      <View>
+
+      </View>
+      <View style={styles.headerContainer}>
+        <HeaderBar name={header} />
+      </View>
       <View style={styles.container}>
         {icon}
         <View style={styles.wrapText}>
@@ -30,6 +35,13 @@ const Notification = ({
 };
 
 const styles = {
+  wrapper: {
+    flex: 1,
+    backgroundColor: "#fff",
+  },
+  headerContainer: {
+    paddingHorizontal: 15,
+  },
   container: {
     flex: 1,
     paddingHorizontal: 20,

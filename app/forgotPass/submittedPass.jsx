@@ -10,9 +10,7 @@ const SubmittedPass = () => {
       header="Change Password"
       title="Request Sent Successfully"
       description="Your reset request has been sent successfully. Please wait while the admin reviews your request"
-      // buttonText="Request Password Reset"
       icon={<Succes />}
-      onPress={() => router.navigate("/notification/message")}
     />
   );
 };

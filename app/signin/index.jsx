@@ -1,7 +1,9 @@
 import React from "react";
-import { View, Text, SafeAreaView, TextInput, StyleSheet } from "react-native";
+import { View, Text, SafeAreaView, StyleSheet } from "react-native";
+import { Link } from "expo-router";
 import Button from "@/components/ui/Button";
 import InputField from "@/components/ui/InputField";
+import Colors from "../../constants/Colors";
 
 const SignIn= () => {
   return (
@@ -16,6 +18,9 @@ const SignIn= () => {
           label="Password"
           placeholder="Input your password"
         />
+        <Link href={"/forgotPass"} style={styles.forgotPass}>
+          Forgot Password?
+        </Link>
         <Button text="Sign In" title="Sign In" />
       </View>
     </SafeAreaView>
@@ -38,6 +43,13 @@ const styles = StyleSheet.create({
     fontFamily: "Inter-SemiBold",
     textAlign: "center",
     marginBottom: 50
+  },
+  forgotPass: {
+    textAlign: "right",
+    fontFamily: "Inter-Medium",
+    textDecorationLine: 'underline',
+    color: Colors.green,
+    marginBottom: 20,
   },
 });
 
