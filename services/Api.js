@@ -4,7 +4,7 @@ import { BASE_API } from "@/constants/Config";
 const Api = axios.create({
     baseURL: BASE_API,
     headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'multipart/form-data',
     }
 });
 
