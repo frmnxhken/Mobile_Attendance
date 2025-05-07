@@ -10,7 +10,7 @@ const Notification = ({
     header="Notification",
   title = "You have no notifications at this time",
   description = "If you would like to check for new messages, please tap the 'Reload' button below",
-  buttonText = "Reload",
+  buttonText = "",
   icon = <NoNotif />,
   onPress = () => {},
 }) => {
@@ -23,7 +23,7 @@ const Notification = ({
           <Text style={styles.Title}>{title}</Text>
           <Text style={styles.Description}>{description}</Text>
         </View>
-        <Button text={buttonText} onPress={onPress} />
+        {buttonText ? <Button text={buttonText} onPress={onPress} /> : null}
       </View>
     </SafeAreaView>
   );
