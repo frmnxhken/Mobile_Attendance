@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import * as Location from "expo-location";
 import { CameraView, useCameraPermissions } from "expo-camera";
 
 import Button from "@/components/ui/Button";
 import HeaderBar from "@/components/ui/HeaderBar";
-
 import Notification from "@/components/screens/Notification";
 
 import Sizes from "@/constants/Sizes";
+import { postCheckIn } from "@/services/AttendanceService";
+import { getDateTime, formatToDayMonth } from "@/utils/dateHelpers";
 
 import CameraPermission from "@/assets/Icons/CameraPermission";
 import FlagGrayIcon from "@/assets/Icons/FlagGrayIcon";
@@ -18,6 +19,8 @@ import CalendarGrayIcon from "@/assets/Icons/CalendarGrayIcon";
 const Presention = () => {
   const [permission, requestPermission] = useCameraPermissions();
   const [location, setLocation] = useState(null);
+  const cameraRef = useRef(null);
+  const dateTime = getDateTime();
 
   useEffect(() => {
     (async () => {
@@ -28,6 +31,23 @@ const Presention = () => {
       }
     })();
   }, []);
+
+  const handleCheckIn = async () => {
+    if (!cameraRef) return;
+    const photo = await cameraRef.current.takePictureAsync();
+    try {
+      const response = await postCheckIn({
+        uri: photo.uri,
+        checkin: dateTime.time,
+        date: dateTime.today,
+        lat: location.latitude.toFixed(5),
+        long: location.longitude.toFixed(5),
+      });
+    } catch (e) {
+
+    }
+  }
+
 
   if (!permission) {
     return <View />;
@@ -52,7 +72,7 @@ const Presention = () => {
         <HeaderBar
           name="Attendance"
         />
-        <CameraView style={styles.camera} facing={"front"}>
+        <CameraView style={styles.camera} facing={"front"} ref={cameraRef}>
           <View style={styles.overlay}>
             <Text style={styles.coords}>
               {location
@@ -68,14 +88,16 @@ const Presention = () => {
           </View>
           <View style={styles.informationItem}>
             <ClockGrayIcon />
-            <Text style={styles.bodyText}>08:53</Text>
+            <Text style={styles.bodyText}>{dateTime.time}</Text>
           </View>
           <View style={styles.informationItem}>
             <CalendarGrayIcon />
-            <Text style={styles.bodyText}>30 April</Text>
+            <Text style={styles.bodyText}>
+              {formatToDayMonth(dateTime.today)}
+            </Text>
           </View>
         </View>
-        <Button text="Checkin" />
+        <Button text="Checkin" onPress={handleCheckIn} />
       </View>
     </SafeAreaView>
   );

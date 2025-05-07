@@ -34,3 +34,17 @@ export const getWeeklyRange = (today = new Date()) => {
 
     return days;
 }
+
+export const getDateTime = () => {
+    const date = new Date();
+    const time = date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false });
+    const today = date.toISOString().split('T')[0];
+    return {time, today}
+}
+
+export const formatToDayMonth = dateStr => {
+    const date = new Date(dateStr);
+    const options = { day: '2-digit', month: 'short' };
+    return date.toLocaleDateString('en-GB', options);
+}
+  
