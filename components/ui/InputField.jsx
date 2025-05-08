@@ -12,10 +12,10 @@ const InputField = (props) => {
                 style={styles.input}
                 placeholder={props.placeholder}
                 placeholderTextColor={Colors.gray}
-                secureTextEntry={false}
+                secureTextEntry={props.secure}
                 keyboardType="default"
                 autoCapitalize="none"
-                value=""
+                value={props.value}
                 onChangeText={props.onChangeText}
             />
         </View>
