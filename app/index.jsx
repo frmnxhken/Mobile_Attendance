@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Text, View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { Link, useRouter } from "expo-router";
 import Card from "@/components/ui/Card";
@@ -10,9 +10,18 @@ import CalendarSlide from "@/components/home/CalendarSlide";
 import Sizes from "@/constants/Sizes";
 import Colors from "@/constants/Colors";
 import { todayAttendances } from "@/constants/Data";
+import { getAttendanceRecent } from "@/services/HistoryService";
 
 const Home = () => {
     const router = useRouter();
+    const [data, setData] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        getAttendanceRecent().then(response => {
+            setData(response.data)
+        }).finally(() => setLoading(false));
+    }, [])
 
     return (
         <SafeAreaView style={styles.wrapper}>
@@ -40,9 +49,10 @@ const Home = () => {
                             <Link href="/history" style={styles.actionText}>View All</Link>
                         </View>
                         <View style={styles.recentContainer}>
-                            {[1,2,3,4,5].map((_, index) => (
+                            {data?.histories?.map((history, index) => (
                                 <ListItem
                                     key={index}
+                                    {...history}
                                 />
                             ))}
                         </View>
