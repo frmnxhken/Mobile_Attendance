@@ -1,17 +1,23 @@
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { BASE_API } from "@/constants/Config";
 
 const Api = axios.create({
     baseURL: BASE_API,
     headers: {
-        'Content-Type': 'multipart/form-data',
+        "Content-Type": "multipart/form-data",
     }
 });
 
-Api.interceptors.request.use(config => {
-    const token = "Bearer 2|ZFmiDtSBKQ2QMaA9wTjI8RZxcQtL1yGQ5HHjpmPK843e1aae";
-    config.headers.Authorization = token;
-    return config;
-});
+Api.interceptors.request.use(
+    async (config) => {
+        const token = await AsyncStorage.getItem("access_token");
+
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+    }
+);
 
 export default Api;

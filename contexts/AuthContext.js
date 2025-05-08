@@ -1,14 +1,17 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { Authentication } from "@/contexts/AuthContext";
+import { useRouter } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Authentication } from "@/services/AuthService";
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
+  const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(null);
 
   useEffect(() => {
     const checkAuth = async () => {
-      const token = 'initoken';
+      const token = await AsyncStorage.getItem("access_token");
       setIsAuthenticated(!!token);
     };
 
@@ -18,12 +21,15 @@ export function AuthProvider({ children }) {
   const signIn = async (credential) => {
     try {
         const response = await Authentication(credential);
-        console.log(response)
+        const token = response.data.access_token;
+        await AsyncStorage.setItem("access_token", token);
+        setIsAuthenticated(true);
+        router.replace("/");
     } catch (error) {
         console.log(error)
     }
-    setIsAuthenticated(true);
   }
+
   const signOut = () => setIsAuthenticated(false);
 
   return (
