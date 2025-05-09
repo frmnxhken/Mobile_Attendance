@@ -8,13 +8,16 @@ import HeaderBar from "@/components/ui/HeaderBar";
 import Notification from "@/components/screens/Notification";
 import InfoBar from "@/components/attendance/InfoBar";
 
+import { useAuth } from "@/contexts/AuthContext";
 import { postCheckIn, postCheckOut, getCheckStatus } from "@/services/AttendanceService";
+import { haversineDistance } from "@/utils/GeoHelpers";
 import { getDateTime, formatToDayMonth } from "@/utils/dateHelpers";
 
 import CameraPermission from "@/assets/Icons/CameraPermission";
 
 const Presention = () => {
   const [permission, requestPermission] = useCameraPermissions();
+  const { user } = useAuth();
   const [location, setLocation] = useState(null);
   const [attendance, setAttendance] = useState(null);
   const cameraRef = useRef(null);
@@ -99,7 +102,14 @@ const Presention = () => {
           </View>
         </CameraView>
         <InfoBar
-          distance="0.2"
+          distance={
+            location ? 
+            haversineDistance(
+            {"latitude": location?.latitude?.toFixed(5), 
+            "longitude": location?.longitude?.toFixed(5)},
+            {"latitude": user?.office_lat,
+            "longitude": user?.office_long}).toFixed(2) + " km" : "calc.."
+          }
           time={dateTime.time}
           date={formatToDayMonth(dateTime.today)}
         />
