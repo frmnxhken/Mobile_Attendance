@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
+    columnGap: 10,
     backgroundColor: "#fff",
     borderRadius: 12,
     paddingHorizontal: 20,
@@ -28,12 +29,16 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: Sizes.body,
-    fontFamily: "Inter-Medium"
+    fontFamily: "Inter-Medium",
+    maxWidth: 50,
+    minWidth: 50
   },
   value: {
     fontSize: Sizes.body,
     color: Colors.gray,
-    fontFamily: "Inter-Regular"
+    fontFamily: "Inter-Regular",
+    textAlign: "right",
+    width: "80%"
   },
 });
 
