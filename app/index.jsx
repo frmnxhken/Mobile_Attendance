@@ -64,7 +64,7 @@ const Home = () => {
             </ScrollView>
             <View style={styles.CTAContainer}>
                 <Button text="Excused" type="dark" onPress={() => router.navigate("/leave")} style={{width: "48%"}}/>
-                <Button text="Checkin" onPress={() => router.navigate("/presention")} style={{width: "48%"}}/>
+                <Button text="Attendance" onPress={() => router.navigate("/presention")} style={{width: "48%"}}/>
             </View>
         </SafeAreaView>
     )
