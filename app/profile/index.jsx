@@ -7,24 +7,24 @@ import InfoBox from "@/components/ui/InfoBox";
 import HeaderBar from "@/components/ui/HeaderBar";
 
 import Sizes from "@/constants/Sizes";
-import { profiles } from "@/constants/Data";
 import { useAuth } from "@/contexts/AuthContext";
+import { profiles } from "@/constants/Data";
 
 const Profile = () => {
   const router = useRouter();
-  const { signOut } = useAuth();
+  const { signOut, user } = useAuth();
 
   return (
     <SafeAreaView style={styles.wrapper}>
-      <ScrollView>
+      <ScrollView>  
         <View style={styles.container}>
           <HeaderBar name="Profile"/>
           <View style={styles.profileHeader}>
             <Image
-              source={{ uri: "https://upload.wikimedia.org/wikipedia/commons/0/08/Aespa_Karina_2024_MMA_2.jpg" }} // Ganti dengan gambar asli
+              source={{ uri: user.photo }} 
               style={styles.avatar}
             />
-            <Text style={styles.titleText}>Karina Blue</Text>
+            <Text style={styles.titleText}>{user.name}</Text>
             <Button text="Edit Profile" style={styles.editButton} onPress={() => router.navigate("/profile/edit")}/>
           </View>
           <View>
@@ -34,7 +34,7 @@ const Profile = () => {
                 <InfoBox
                   key={index}
                   label={profile.label}
-                  value={profile.value}
+                  value={user[profile.key]}
                 />
               ))}
             </View>
