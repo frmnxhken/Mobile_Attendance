@@ -29,7 +29,7 @@ const History = () => {
                         name="History Attendance"
                     />
                     <View style={styles.statisticContainer}>
-                    <Card label="Present" value={data?.statistic?.present} icon="checked" color="lightGreen" />
+                        <Card label="Present" value={data?.statistic?.present} icon="checked" color="lightGreen" />
                         <Card label="Total late" value={data?.statistic?.late} icon="time" color="lightBlue" />
                         <Card label="Excused" value={data?.statistic?.excused} icon="envelope" color="yellow" />
                         <Card label="Total absent" value={data?.statistic?.absent} icon="danger" color="pink" />

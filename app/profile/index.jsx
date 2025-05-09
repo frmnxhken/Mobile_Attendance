@@ -8,9 +8,12 @@ import HeaderBar from "@/components/ui/HeaderBar";
 
 import Sizes from "@/constants/Sizes";
 import { profiles } from "@/constants/Data";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Profile = () => {
   const router = useRouter();
+  const { signOut } = useAuth();
+
   return (
     <SafeAreaView style={styles.wrapper}>
       <ScrollView>
@@ -44,7 +47,7 @@ const Profile = () => {
           style={{ width: "100%" }}
           onPress={() => router.navigate("/changePass")}
         />
-        <Button onPress={() => router.navigate("/signin")} text="Logout" type="secondary" style={{ width: "100%" }} />
+        <Button onPress={() => signOut()} text="Logout" type="secondary" style={{ width: "100%" }} />
       </View>
     </SafeAreaView>
   )

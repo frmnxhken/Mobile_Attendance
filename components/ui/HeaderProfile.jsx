@@ -5,19 +5,19 @@ import { Link } from "expo-router";
 import BellIcon from "@/assets/Icons/BellIcon";
 import Colors from "@/constants/Colors";
 
-const HeaderProfile = () => {
+const HeaderProfile = ({name, photo}) => {
     return (
         <View style={styles.container}>
             <View style={styles.profileContainer}>
                 <Link href="/profile">
                     <Image
-                        source={{ uri: "https://upload.wikimedia.org/wikipedia/commons/0/08/Aespa_Karina_2024_MMA_2.jpg" }}
+                        source={{ uri: photo }}
                         style={styles.avatar}
                     />
                 </Link>
                 <View style={{marginLeft: 10}}>
                     <Text style={styles.actionText}>Welcome Back!</Text>
-                    <Text style={styles.headerText}>Karina</Text>
+                    <Text style={styles.headerText}>{name}</Text>
                 </View>
             </View>
             <Link href="/notification">

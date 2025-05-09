@@ -8,10 +8,13 @@ const AuthContext = createContext();
 export function AuthProvider({ children }) {
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(null);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const checkAuth = async () => {
       const token = await AsyncStorage.getItem("access_token");
+      const userData = await AsyncStorage.getItem("user");
+      setUser(JSON.parse(userData));
       setIsAuthenticated(!!token);
     };
 
@@ -22,18 +25,28 @@ export function AuthProvider({ children }) {
     try {
         const response = await Authentication(credential);
         const token = response.data.access_token;
+        const user = response.data.user;
         await AsyncStorage.setItem("access_token", token);
+        await AsyncStorage.setItem("user", JSON.stringify(user));
         setIsAuthenticated(true);
         router.replace("/");
-    } catch (error) {
+      } catch (error) {
         console.log(error)
+      }
     }
+    
+  const signOut = async () => {
+    try {
+      await AsyncStorage.removeItem("access_token");
+      setIsAuthenticated(false);
+      router.replace("/signin");
+    } catch (error) {
+      console.log(error)
+    } 
   }
 
-  const signOut = () => setIsAuthenticated(false);
-
   return (
-    <AuthContext.Provider value={{ isAuthenticated, signIn, signOut }}>
+    <AuthContext.Provider value={{ isAuthenticated, signIn, signOut, user }}>
       {children}
     </AuthContext.Provider>
   );

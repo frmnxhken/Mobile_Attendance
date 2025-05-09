@@ -9,11 +9,12 @@ import CalendarSlide from "@/components/home/CalendarSlide";
 
 import Sizes from "@/constants/Sizes";
 import Colors from "@/constants/Colors";
-import { todayAttendances } from "@/constants/Data";
 import { getAttendanceRecent } from "@/services/HistoryService";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Home = () => {
     const router = useRouter();
+    const { user } = useAuth();
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -26,21 +27,19 @@ const Home = () => {
     return (
         <SafeAreaView style={styles.wrapper}>
             <ScrollView>
-                <HeaderProfile/>
+                <HeaderProfile
+                    name={user.name}
+                    photo={user.photo}
+                />
                 <CalendarSlide/>
                 <View style={styles.sectionSpace}>
                     <View>
                         <Text style={styles.headerTitle}>Today Attendance</Text>
                         <View style={styles.statisticContainer}>
-                            {todayAttendances.map((today, index) => (
-                                <Card
-                                    key={index}
-                                    label={today.label}
-                                    value={today.value}
-                                    icon={today.icon}
-                                    color={today.color}
-                                />
-                            ))}
+                            <Card label="Start Shift" value={data?.statistic?.checkin} icon="checkin" color="lightGreen" />
+                            <Card label="End Shift" value={data?.statistic?.checkout} icon="checkout" color="pink" />
+                            <Card label="Balance" value={data?.statistic?.balance} icon="clock" color="yellow" />
+                            <Card label="Total Attended" value={data?.statistic?.attended} icon="calendar" color="lightBlue" />
                         </View>
                     </View>
                     <View>
