@@ -36,8 +36,12 @@ const Home = () => {
                     <View>
                         <Text style={styles.headerTitle}>Today Attendance</Text>
                         <View style={styles.statisticContainer}>
-                            <Card label="Start Shift" value={data?.statistic?.checkin} icon="checkin" color="lightGreen" />
-                            <Card label="End Shift" value={data?.statistic?.checkout} icon="checkout" color="pink" />
+                            <Card label="Start Shift" 
+                                value={data?.statistic?.checkin ? data?.statistic?.checkin : "-- : --"} 
+                                icon="checkin" color="lightGreen" />
+                            <Card label="End Shift" 
+                                value={data?.statistic?.checkout ? data?.statistic?.checkout : "-- : --"} 
+                                icon="checkout" color="pink" />
                             <Card label="Balance" value={data?.statistic?.balance} icon="clock" color="yellow" />
                             <Card label="Total Attended" value={data?.statistic?.attended} icon="calendar" color="lightBlue" />
                         </View>
