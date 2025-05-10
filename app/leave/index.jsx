@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { SafeAreaView, Text, View, ScrollView, StyleSheet, TouchableOpacity, TextInput, Modal } from "react-native";
 import { useRouter } from "expo-router";
+import * as ImagePicker from "expo-image-picker";
 
 import HeaderBar from "@/components/ui/HeaderBar";
 import Button from "@/components/ui/Button";
 
+import { getDateTime } from "@/utils/dateHelpers";
 import Sizes from "@/constants/Sizes";
 import UploadIcon from "@/assets/Icons/UploadIcon";
+import { postRequestExcuse } from "@/services/ExcuseService";
 
 const ChevronDownIcon = () => (
   <Text style={styles.iconText}>▼</Text>
@@ -14,21 +17,54 @@ const ChevronDownIcon = () => (
 
 const Leave = () => {
   const router = useRouter();
-  const [category, setCategory] = useState("Leave Early");
+  const dateTime = getDateTime();
+  const [category, setCategory] = useState("");
+  const [description, setDescription] = useState("");
+  const [proof, setProof] = useState(null);
   const [isDropdownVisible, setDropdownVisible] = useState(false);
-
   const categories = ["Sick", "Vacation"];
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setProof(result.assets[0]);
+    }
+  };
+
+  const handleSubmit = async () => {
+    const payload = {
+      reason: description,
+      date: dateTime.today,
+      uri: proof.uri
+    }
+
+    try {
+      const response = await postRequestExcuse(payload);
+      if(response.data.message === "Success create request excuse") {
+        return router.navigate("/splash/SuccessSplash")
+      }
+    } catch (e) {
+
+    }
+  };
+
+
 
   return (
     <SafeAreaView style={styles.wrapper}>
       <ScrollView>
         <View style={styles.container}>
-          <HeaderBar name="Leave Request" />
+          <HeaderBar name="Excuse Request" />
           <View style={styles.form}>
             <View>
               <Text style={styles.formLabel}>Reason</Text>
               <TouchableOpacity style={styles.dropdown} onPress={() => setDropdownVisible(true)}>
-                <Text style={styles.dropdownText}>{category}</Text>
+                <Text style={styles.dropdownText}>Select the reason</Text>
                 <ChevronDownIcon />
               </TouchableOpacity>
             </View>
@@ -55,26 +91,28 @@ const Leave = () => {
                 </View>
               </TouchableOpacity>
             </Modal>
-            
+
             <View>
               <Text style={styles.formLabel}>Description</Text>
               <TextInput
                 style={styles.textInput}
                 placeholder="Type here..."
                 multiline
+                value={description}
+                onChangeText={(text) => setDescription(text)}
                 numberOfLines={4}
               />
             </View>
 
             <View>
               <Text style={styles.formLabel}>Proof</Text>
-              <TouchableOpacity style={styles.uploadContainer}>
+              <TouchableOpacity onPress={pickImage} style={styles.uploadContainer}>
                 <UploadIcon />
                 <Text style={styles.uploadText}>Upload Image</Text>
               </TouchableOpacity>
             </View>
 
-            <Button text="Submit" onPress={() => router.navigate("/splash/SuccessSplash")}/>
+            <Button text="Submit" onPress={handleSubmit} />
           </View>
         </View>
       </ScrollView>
