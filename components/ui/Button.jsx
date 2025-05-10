@@ -21,7 +21,7 @@ const Button = ({ text, type = "primary", onPress, disabled = false, style }) =>
                 paddingHorizontal: 20,
                 borderRadius: 10,
                 alignItems: "center",
-                borderWidth: isSecondary ? 2 : 0,
+                borderWidth: isSecondary ? 1.3 : 0,
                 borderColor: isSecondary ? Colors.black : "transparent",
                 ...style,
             }}

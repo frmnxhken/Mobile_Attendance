@@ -1,6 +1,5 @@
 import React from "react";
-import { SafeAreaView, Text, View, ScrollView, Image, StyleSheet, TouchableOpacity } from "react-native";
-import { useRouter } from "expo-router";
+import { SafeAreaView, Text, View, Image, StyleSheet, TouchableOpacity } from "react-native";
 
 import Button from "@/components/ui/Button";
 import HeaderBar from "@/components/ui/HeaderBar";
@@ -9,32 +8,28 @@ import CameraIcon from "@/assets/Icons/CameraIcon";
 
 import Sizes from "@/constants/Sizes";
 import Colors from "@/constants/Colors";
-import { profiles } from "@/constants/Data";
 
 const EditProfile = () => {
-  const router = useRouter();
   return (
     <SafeAreaView style={styles.wrapper}>
-      <ScrollView>
-        <View style={styles.container}>
-        <HeaderBar name="Edit Profile"/>
-            <View style={styles.profileContainer}>
-                <View style={styles.avatarWrapper}>
-                    <Image
-                    source={{ uri: "https://upload.wikimedia.org/wikipedia/commons/0/08/Aespa_Karina_2024_MMA_2.jpg" }} // Ganti dengan gambar asli
-                    style={styles.avatar}
-                    />
-                    <TouchableOpacity style={styles.cameraButton}>
-                        <CameraIcon/>
-                    </TouchableOpacity>
-                </View>
-            </View>
-          <View Style={styles.Content}>
-            <Text style={styles.titleText}>Karina Blue</Text>
-            <Text style={styles.text}>Enmployee</Text>
+      <View style={styles.container}>
+        <HeaderBar name="Edit Profile" />
+        <View style={styles.profileContainer}>
+          <View style={styles.avatarWrapper}>
+            <Image
+              source={{ uri: "https://upload.wikimedia.org/wikipedia/commons/0/08/Aespa_Karina_2024_MMA_2.jpg" }} // Ganti dengan gambar asli
+              style={styles.avatar}
+            />
+            <TouchableOpacity style={styles.cameraButton}>
+              <CameraIcon />
+            </TouchableOpacity>
           </View>
         </View>
-      </ScrollView>
+        <View Style={styles.Content}>
+          <Text style={styles.titleText}>Karina Blue</Text>
+          <Text style={styles.text}>Enmployee</Text>
+        </View>
+      </View>
       <View style={styles.CTAContainer}>
         <Button text="Save" style={{ width: "100%" }} />
       </View>
@@ -52,16 +47,20 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15
   },
   profileContainer: {
-    alignItems: 'center',
+    alignItems: "center",
   },
   avatarWrapper: {
-    position: 'relative',
+    position: "relative",
   },
   cameraButton: {
-    position: 'absolute',
-    bottom: 30,
-    right: 10,
+    width: 40,
+    height: 40,
+    position: "absolute",
+    bottom: 20,
+    right: 5,
     padding: 8,
+    backgroundColor: Colors.green,
+    borderRadius: 100
   },
   Content: {
     marginTop: 20,
@@ -69,8 +68,8 @@ const styles = StyleSheet.create({
     marginBottom: 40
   },
   avatar: {
-    width: 300,
-    height: 300,
+    width: 150,
+    height: 150,
     borderRadius: 200,
     marginTop: 20,
     marginBottom: 30

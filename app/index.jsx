@@ -4,13 +4,14 @@ import { Link, useRouter } from "expo-router";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import ListItem from "@/components/ui/ListItem";
-import HeaderProfile from "@/components/ui/HeaderProfile";
+import HeaderProfile from "@/components/home/HeaderProfile";
 import CalendarSlide from "@/components/home/CalendarSlide";
 
 import Sizes from "@/constants/Sizes";
 import Colors from "@/constants/Colors";
 import { getAttendanceRecent } from "@/services/HistoryService";
 import { useAuth } from "@/contexts/AuthContext";
+import { formatTime } from "@/utils/dateHelpers";
 
 const Home = () => {
     const router = useRouter();
@@ -28,20 +29,16 @@ const Home = () => {
         <SafeAreaView style={styles.wrapper}>
             <ScrollView>
                 <HeaderProfile
-                    name={user.name}
-                    photo={user.photo}
+                    name={user?.name}
+                    photo={user?.photo}
                 />
                 <CalendarSlide/>
                 <View style={styles.sectionSpace}>
                     <View>
                         <Text style={styles.headerTitle}>Today Attendance</Text>
                         <View style={styles.statisticContainer}>
-                            <Card label="Start Shift" 
-                                value={data?.statistic?.checkin ? data?.statistic?.checkin : "-- : --"} 
-                                icon="checkin" color="lightGreen" />
-                            <Card label="End Shift" 
-                                value={data?.statistic?.checkout ? data?.statistic?.checkout : "-- : --"} 
-                                icon="checkout" color="pink" />
+                            <Card label="Start Shift" value={formatTime(data?.statistic?.checkin) || "-- : --"} icon="checkin" color="lightGreen" />
+                            <Card label="End Shift" value={formatTime(data?.statistic?.checkout) || "-- : --"} icon="checkout" color="pink" />
                             <Card label="Balance" value={data?.statistic?.balance} icon="clock" color="yellow" />
                             <Card label="Total Attended" value={data?.statistic?.attended} icon="calendar" color="lightBlue" />
                         </View>
@@ -116,6 +113,5 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15
     }
 });
-
 
 export default Home;

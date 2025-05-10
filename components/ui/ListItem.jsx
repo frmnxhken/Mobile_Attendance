@@ -7,7 +7,7 @@ import OutGrayIcon from "@/assets/Icons/OutGrayIcon";
 
 import Colors from "@/constants/Colors";
 import Sizes from "@/constants/Sizes";
-import { formatToDayMonth } from "@/utils/dateHelpers";
+import { formatToDayMonth, formatTime } from "@/utils/dateHelpers";
 
 const ListItem = (props) => {
   return (
@@ -19,7 +19,7 @@ const ListItem = (props) => {
           </Text>
           <View style={styles.space}>
             <InGrayIcon />
-            <Text style={styles.actionText}>{props.checkin}</Text>
+            <Text style={styles.actionText}>{formatTime(props.checkin)}</Text>
           </View>
         </View>
         <View>
@@ -29,7 +29,7 @@ const ListItem = (props) => {
             justifyContent: "flex-end"
           }]}>
             <OutGrayIcon />
-            <Text style={styles.actionText}>{props.checkout}</Text>
+            <Text style={styles.actionText}>{formatTime(props.checkout)}</Text>
           </View>
         </View>
       </View>

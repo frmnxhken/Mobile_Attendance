@@ -47,4 +47,8 @@ export const formatToDayMonth = dateStr => {
     const options = { day: '2-digit', month: 'short' };
     return date.toLocaleDateString('en-GB', options);
 }
-  
+
+export const formatTime = timeStr => {
+    const time = timeStr?.slice(0, 5)
+    return time;
+}

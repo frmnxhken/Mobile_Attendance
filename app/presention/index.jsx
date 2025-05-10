@@ -10,7 +10,7 @@ import InfoBar from "@/components/attendance/InfoBar";
 
 import { useAuth } from "@/contexts/AuthContext";
 import { postCheckIn, postCheckOut, getCheckStatus } from "@/services/AttendanceService";
-import { haversineDistance } from "@/utils/GeoHelpers";
+import { haversineDistance } from "@/utils/geoHelpers";
 import { getDateTime, formatToDayMonth } from "@/utils/dateHelpers";
 
 import CameraPermission from "@/assets/Icons/CameraPermission";
@@ -22,6 +22,11 @@ const Presention = () => {
   const [attendance, setAttendance] = useState(null);
   const cameraRef = useRef(null);
   const dateTime = getDateTime();
+  const distance = haversineDistance(
+    {"latitude": location?.latitude?.toFixed(5), 
+    "longitude": location?.longitude?.toFixed(5)},
+    {"latitude": user?.office_lat,
+    "longitude": user?.office_long}).toFixed(2);
 
   useEffect(() => {
     (async () => {
@@ -104,11 +109,7 @@ const Presention = () => {
         <InfoBar
           distance={
             location ? 
-            haversineDistance(
-            {"latitude": location?.latitude?.toFixed(5), 
-            "longitude": location?.longitude?.toFixed(5)},
-            {"latitude": user?.office_lat,
-            "longitude": user?.office_long}).toFixed(2) + " km" : "calc.."
+            distance + " km" : "calc.."
           }
           time={dateTime.time}
           date={formatToDayMonth(dateTime.today)}
@@ -120,7 +121,7 @@ const Presention = () => {
           <Button text="Check Out" type="dark" onPress={() => handleAttendance("checkout")} />
         )}
         {attendance === "done" && (
-          <Button text="Already Checked Out" disabled />
+          <Button text="Already Checked Out" type="secondary" disabled />
         )}
       </View>
     </SafeAreaView>

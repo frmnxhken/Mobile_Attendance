@@ -13,10 +13,10 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const checkAuth = async () => {
       const token = await AsyncStorage.getItem("access_token");
-      const userData = await AsyncStorage.getItem("user");
-      setUser(JSON.parse(userData));
+      const storedUser = await AsyncStorage.getItem("user");
       setIsAuthenticated(!!token);
-    };
+      if (storedUser) setUser(JSON.parse(storedUser));
+    }
 
     checkAuth();
   }, []);
@@ -28,6 +28,7 @@ export function AuthProvider({ children }) {
         const user = response.data.user;
         await AsyncStorage.setItem("access_token", token);
         await AsyncStorage.setItem("user", JSON.stringify(user));
+        setUser(user);
         setIsAuthenticated(true);
         router.replace("/");
       } catch (error) {
@@ -38,6 +39,8 @@ export function AuthProvider({ children }) {
   const signOut = async () => {
     try {
       await AsyncStorage.removeItem("access_token");
+      await AsyncStorage.removeItem("user");
+      setUser(null);
       setIsAuthenticated(false);
       router.replace("/signin");
     } catch (error) {
@@ -46,7 +49,7 @@ export function AuthProvider({ children }) {
   }
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, signIn, signOut, user }}>
+    <AuthContext.Provider value={{ isAuthenticated, user, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );

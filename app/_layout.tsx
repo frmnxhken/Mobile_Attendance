@@ -39,6 +39,8 @@ function ProtectedLayout() {
         <Stack.Screen name="forgotPass/index" options={{ headerShown: false }} />
         <Stack.Screen name="forgotPass/submittedPass" options={{ headerShown: false }} />
         <Stack.Screen name="leave/index" options={{ headerShown: false }} />
+        <Stack.Screen name="changePass/index" options={{ headerShown: false }} />
+        <Stack.Screen name="splash/SuccessSplash" options={{ headerShown: false }} />
       </Stack>
     </>
   );
