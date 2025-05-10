@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { SafeAreaView, Text, View, Image, StyleSheet, TouchableOpacity } from "react-native";
+import * as ImagePicker from "expo-image-picker";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import Button from "@/components/ui/Button";
 import HeaderBar from "@/components/ui/HeaderBar";
@@ -7,9 +9,41 @@ import HeaderBar from "@/components/ui/HeaderBar";
 import CameraIcon from "@/assets/Icons/CameraIcon";
 
 import Sizes from "@/constants/Sizes";
-import Colors from "@/constants/Colors";
+import { useAuth } from "@/contexts/AuthContext";
+import { updatePhoto } from "@/services/UserService";
+import { useRouter } from "expo-router";
 
 const EditProfile = () => {
+  const router = useRouter();
+  const { user } = useAuth();
+  const [photo, setPhoto] = useState(user?.photo);
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setPhoto(result.assets[0].uri);
+    }
+  }
+
+  const handleSubmit = async() => {
+    try {
+      const response = await updatePhoto(photo);
+      console.log(response)
+      if(response.data.message === "Photo updated successfully") {
+        user.photo = response.data.photo;
+        await AsyncStorage.setItem("user", JSON.stringify(user));
+        return router.navigate("/splash/SuccessSplash")
+      }
+    } catch (e) {
+      
+    }
+  }
+
   return (
     <SafeAreaView style={styles.wrapper}>
       <View style={styles.container}>
@@ -17,21 +51,20 @@ const EditProfile = () => {
         <View style={styles.profileContainer}>
           <View style={styles.avatarWrapper}>
             <Image
-              source={{ uri: "https://upload.wikimedia.org/wikipedia/commons/0/08/Aespa_Karina_2024_MMA_2.jpg" }} // Ganti dengan gambar asli
+              source={{ uri: photo }}
               style={styles.avatar}
             />
-            <TouchableOpacity style={styles.cameraButton}>
+            <TouchableOpacity onPress={pickImage} style={styles.cameraButton}>
               <CameraIcon />
             </TouchableOpacity>
           </View>
         </View>
         <View Style={styles.Content}>
-          <Text style={styles.titleText}>Karina Blue</Text>
-          <Text style={styles.text}>Enmployee</Text>
+          <Text style={styles.titleText}>Update Your Photo</Text>
         </View>
       </View>
       <View style={styles.CTAContainer}>
-        <Button text="Save" style={{ width: "100%" }} />
+        <Button onPress={handleSubmit} text="Save Changes" style={{ width: "100%" }} />
       </View>
     </SafeAreaView>
   )
@@ -53,14 +86,17 @@ const styles = StyleSheet.create({
     position: "relative",
   },
   cameraButton: {
-    width: 40,
-    height: 40,
+    width: 45,
+    height: 45,
     position: "absolute",
-    bottom: 20,
+    bottom: 30,
     right: 5,
-    padding: 8,
-    backgroundColor: Colors.green,
-    borderRadius: 100
+    backgroundColor: "#000",
+    borderRadius: 100,
+    borderWidth: 2,
+    borderColor: "#fff",
+    justifyContent: "center",
+    alignItems: "center"
   },
   Content: {
     marginTop: 20,
@@ -79,12 +115,6 @@ const styles = StyleSheet.create({
     fontFamily: "Inter-SemiBold",
     textAlign: "center",
     marginBottom: 10,
-  },
-  text: {
-    fontSize: Sizes.body,
-    color: Colors.gray,
-    fontFamily: "Inter-Regular",
-    textAlign: "center",
   },
   editButton: {
     backgroundColor: "#000",
