@@ -38,11 +38,11 @@ export function AuthProvider({ children }) {
     
   const signOut = async () => {
     try {
-      await AsyncStorage.removeItem("access_token");
-      await AsyncStorage.removeItem("user");
+      router.replace("/signin");
       setUser(null);
       setIsAuthenticated(false);
-      router.replace("/signin");
+      await AsyncStorage.removeItem("access_token");
+      await AsyncStorage.removeItem("user");
     } catch (error) {
       console.log(error)
     } 

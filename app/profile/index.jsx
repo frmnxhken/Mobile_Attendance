@@ -21,10 +21,10 @@ const Profile = () => {
           <HeaderBar name="Profile"/>
           <View style={styles.profileHeader}>
             <Image
-              source={{ uri: user.photo }} 
+              source={{ uri: user?.photo }} 
               style={styles.avatar}
             />
-            <Text style={styles.titleText}>{user.name}</Text>
+            <Text style={styles.titleText}>{user?.name}</Text>
             <Button text="Edit Profile" style={styles.editButton} onPress={() => router.navigate("/profile/edit")}/>
           </View>
           <View>
@@ -34,7 +34,7 @@ const Profile = () => {
                 <InfoBox
                   key={index}
                   label={profile.label}
-                  value={user[profile.key]}
+                  value={user && user[profile.key]}
                 />
               ))}
             </View>
