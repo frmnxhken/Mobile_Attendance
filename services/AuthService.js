@@ -1,7 +1,13 @@
 import axios from "axios";
+import Api from "./Api";
 import { BASE_API } from "@/constants/Config";
 
 export const Authentication = async (credential) => {
     const response = await axios.post(BASE_API + "/auth", credential);
+    return response;
+}
+
+export const deAuthentication = async () => {
+    const response = await Api.post(BASE_API + "/logout");
     return response;
 }

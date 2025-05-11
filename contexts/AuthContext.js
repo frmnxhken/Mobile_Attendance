@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useRouter } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Authentication } from "@/services/AuthService";
+import { Authentication, deAuthentication } from "@/services/AuthService";
 
 const AuthContext = createContext();
 
@@ -38,6 +38,7 @@ export function AuthProvider({ children }) {
     
   const signOut = async () => {
     try {
+      await deAuthentication();
       router.replace("/signin");
       setUser(null);
       setIsAuthenticated(false);
