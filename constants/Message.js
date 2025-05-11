@@ -7,6 +7,10 @@ const SuccessMessages = {
     title: "Submission Successful!",
     description: "Your information has been received and processed successfully.",
   },
+  resetPassword: {
+    title: "Success Reset Password!",
+    description: "Password reset complete! You can now log in using your NIP as the new password.",
+  },
   leaveRequest: {
     title: "Leave Request Sent!",
     description: "Your leave request has been submitted. We’ll notify you once it's reviewed.",

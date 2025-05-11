@@ -19,7 +19,7 @@ const SuccessSplash = () => {
         <Image style={styles.image} source={Illustration}/>
         <Text style={styles.title}>{message.title}</Text>
         <Text style={styles.description}>{message.description}</Text>
-        <Button onPress={() => router.navigate("/")} text="Back to Home" type="dark"/>
+        <Button onPress={() => router.navigate("/")} text="Back" type="dark"/>
       </View>
     </SafeAreaView>
   )

@@ -12,7 +12,7 @@ function ProtectedLayout() {
   const publicPaths = [
     "/signin",
     "/forgotPass",
-    "/forgotPass/submittedPass",
+    "/splash/SuccessSplash"
   ];
 
   useEffect(() => {
@@ -37,7 +37,6 @@ function ProtectedLayout() {
         <Stack.Screen name="notification/index" options={{ headerShown: false }} />
         <Stack.Screen name="notification/message" options={{ headerShown: false }} />
         <Stack.Screen name="forgotPass/index" options={{ headerShown: false }} />
-        <Stack.Screen name="forgotPass/submittedPass" options={{ headerShown: false }} />
         <Stack.Screen name="leave/index" options={{ headerShown: false }} />
         <Stack.Screen name="changePass/index" options={{ headerShown: false }} />
         <Stack.Screen name="splash/SuccessSplash" options={{ headerShown: false }} />
