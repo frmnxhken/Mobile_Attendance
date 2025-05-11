@@ -3,6 +3,7 @@ import { View, Text, TextInput, StyleSheet } from "react-native";
 
 import Colors from "@/constants/Colors";
 import Sizes from "@/constants/Sizes";
+import Feedback from "./Feedback";
 
 const InputField = (props) => {
     return (
@@ -18,6 +19,7 @@ const InputField = (props) => {
                 value={props.value}
                 onChangeText={props.onChangeText}
             />
+            {props.feedback && <Feedback type="danger" message={props.feedback}/>}
         </View>
     )
 }

@@ -10,6 +10,7 @@ import { useRouter } from "expo-router";
 
 const ChangePassword = () => {
   const router = useRouter();
+  const [errors, setErrors] = useState({});
   const [form, setForm] = useState({
     current_password: "",
     new_password: "",
@@ -21,16 +22,15 @@ const ChangePassword = () => {
   }
 
   const handleSubmit = async () => {
-    try {
-      const response = await updatePassword(form);
-      if (response.data.message === "Password updated successfully") {
-        router.push({
-          pathname: "/splash/SuccessSplash",
-          params: { type: "passwordChange"}
-        });
-      }
-    } catch (e) {
-      console.log(e);
+    const response = await updatePassword(form);
+    if (response.success) {
+      setErrors({});
+      router.push({
+        pathname: "/splash/SuccessSplash",
+        params: { type: "passwordChange" },
+      });
+    } else {
+      setErrors(response.errors);
     }
   }
 
@@ -46,18 +46,21 @@ const ChangePassword = () => {
               placeholder="Input your current password"
               value={form.current_password}
               onChangeText={(text) => handleInput("current_password", text)}
-            />
+              feedback={ errors.current_password }
+              />
             <InputField
               label="New Password"
               placeholder="Input your new password"
               value={form.new_password}
               onChangeText={(text) => handleInput("new_password", text)}
-            />
+              feedback={ errors.new_password }
+              />
             <InputField
               label="Confirm Password"
               placeholder="Confirm your password"
               value={form.new_password_confirmation}
               onChangeText={(text) => handleInput("new_password_confirmation", text)}
+              feedback={ errors.new_password_confirmation }
             />
           </View>
         </View>

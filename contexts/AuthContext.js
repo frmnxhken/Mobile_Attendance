@@ -16,26 +16,28 @@ export function AuthProvider({ children }) {
       const storedUser = await AsyncStorage.getItem("user");
       setIsAuthenticated(!!token);
       if (storedUser) setUser(JSON.parse(storedUser));
-    }
+    };
 
     checkAuth();
   }, []);
 
   const signIn = async (credential) => {
-    try {
-        const response = await Authentication(credential);
-        const token = response.data.access_token;
-        const user = response.data.user;
-        await AsyncStorage.setItem("access_token", token);
-        await AsyncStorage.setItem("user", JSON.stringify(user));
-        setUser(user);
-        setIsAuthenticated(true);
-        router.replace("/");
-      } catch (error) {
-        console.log(error)
-      }
+    const response = await Authentication(credential);
+    if (response.success) {
+      const { access_token: token, user } = response.data;
+      await AsyncStorage.setItem("access_token", token);
+      await AsyncStorage.setItem("user", JSON.stringify(user));
+      setUser(user);
+      setIsAuthenticated(true);
+      router.replace("/");
+      return null;
     }
-    
+    return {
+      errors: response.errors,
+      message: response.message,
+    };
+  };
+
   const signOut = async () => {
     try {
       await deAuthentication();
@@ -45,9 +47,9 @@ export function AuthProvider({ children }) {
       await AsyncStorage.removeItem("access_token");
       await AsyncStorage.removeItem("user");
     } catch (error) {
-      console.log(error)
-    } 
-  }
+      console.log(error);
+    }
+  };
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, user, signIn, signOut }}>

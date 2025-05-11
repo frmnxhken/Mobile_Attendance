@@ -1,23 +1,26 @@
 import Api from "./Api";
 import axios from "axios";
 import { BASE_API } from "@/constants/Config";
+import { errorHandler } from "@/utils/errorHandler";
 
 export const updatePassword = async ({ current_password, new_password, new_password_confirmation }) => {
-    const response = await Api.post("/user/update-password", {
-        current_password,
-        new_password,
-        new_password_confirmation        
-    });
-    
-    return response;
-};
+    try {
+        const response = await Api.post("/user/update-password", {
+            current_password,
+            new_password,
+            new_password_confirmation        
+        });
+        return { success: true, data: response.data }
+    } catch (error) {
+        return errorHandler(error);
+    }
+}
 
 export const resetPassword = async ({ nip, email }) => {
     const response = await axios.post(BASE_API + "/user/reset-password", {
         nip,
         email
     });
-    console.log(response)
     
     return response;
 };
