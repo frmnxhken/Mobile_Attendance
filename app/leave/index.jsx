@@ -46,7 +46,10 @@ const Leave = () => {
     try {
       const response = await postRequestExcuse(payload);
       if(response.data.message === "Success create request excuse") {
-        return router.navigate("/splash/SuccessSplash")
+        return router.push({
+          pathname: "/splash/SuccessSplash",
+          params: {type: "leaveRequest"}
+        });
       }
     } catch (e) {
 

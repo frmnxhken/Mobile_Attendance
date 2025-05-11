@@ -14,10 +14,12 @@ import { haversineDistance } from "@/utils/geoHelpers";
 import { getDateTime, formatToDayMonth } from "@/utils/dateHelpers";
 
 import CameraPermission from "@/assets/Icons/CameraPermission";
+import { useRouter } from "expo-router";
 
 const Presention = () => {
   const [permission, requestPermission] = useCameraPermissions();
   const { user } = useAuth();
+  const router = useRouter();
   const [location, setLocation] = useState(null);
   const [attendance, setAttendance] = useState(null);
   const cameraRef = useRef(null);
@@ -67,8 +69,14 @@ const Presention = () => {
       } else {
         await postCheckOut(payload);
       }
+
       const response = await getCheckStatus();
       setAttendance(response.data.attendance);
+      
+      return router.push({
+        pathname: "/splash/SuccessSplash",
+        params: {type: "formSubmission"}
+      });
     } catch (e) {
       return;
     }

@@ -33,14 +33,16 @@ const EditProfile = () => {
   const handleSubmit = async() => {
     try {
       const response = await updatePhoto(photo);
-      console.log(response)
       if(response.data.message === "Photo updated successfully") {
         user.photo = response.data.photo;
         await AsyncStorage.setItem("user", JSON.stringify(user));
-        return router.navigate("/splash/SuccessSplash")
+        return router.push({
+          pathname: "/splash/SuccessSplash",
+          params: {type: "profileUpdate"}
+        });
       }
     } catch (e) {
-      
+      console.log(e)
     }
   }
 

@@ -8,7 +8,7 @@ export const updatePassword = async ({ current_password, new_password, new_passw
     });
     
     return response;
-}
+};
 
 
 export const updatePhoto = async (uri) => {
@@ -18,7 +18,7 @@ export const updatePhoto = async (uri) => {
         name: "profile.jpg",
         type: "image/jpg",
     });
-
-    const response = Api.post("/user/update-photo", formData);
+    
+    const response = await Api.post("/user/update-photo", formData);
     return response;
 }

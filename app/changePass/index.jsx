@@ -6,8 +6,10 @@ import InputField from "@/components/ui/InputField";
 import HeaderBar from "@/components/ui/HeaderBar";
 import Sizes from "@/constants/Sizes";
 import { updatePassword } from "@/services/UserService";
+import { useRouter } from "expo-router";
 
 const ChangePassword = () => {
+  const router = useRouter();
   const [form, setForm] = useState({
     current_password: "",
     new_password: "",
@@ -21,7 +23,12 @@ const ChangePassword = () => {
   const handleSubmit = async () => {
     try {
       const response = await updatePassword(form);
-      console.log(response.data);
+      if (response.data.message === "Password updated successfully") {
+        router.push({
+          pathname: "/splash/SuccessSplash",
+          params: { type: "passwordChange"}
+        });
+      }
     } catch (e) {
       console.log(e);
     }
@@ -31,7 +38,7 @@ const ChangePassword = () => {
     <SafeAreaView style={styles.wrapper}>
       <ScrollView>
         <View style={styles.container}>
-          <HeaderBar name="Change Password"/>
+          <HeaderBar name="Change Password" />
           <View style={styles.formContainer}>
             <Text style={styles.headerTitle}>Create New Password</Text>
             <InputField
@@ -83,7 +90,7 @@ const styles = StyleSheet.create({
     fontSize: Sizes.title,
     fontFamily: "Inter-SemiBold",
     marginBottom: 50,
-    textAlign: "center", 
+    textAlign: "center",
   },
   CTAContainer: {
     paddingHorizontal: 15,
