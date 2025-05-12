@@ -23,7 +23,10 @@ const ListItem = (props) => {
           </View>
         </View>
         <View>
-          <Badge />
+          {props.status === "present" ? 
+            (<Badge text={props.status}/>):
+            (<Badge text={props.status} color="red"/>)
+          }
           <View style={[styles.space, {
             marginRight: 2,
             justifyContent: "flex-end"

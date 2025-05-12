@@ -12,6 +12,7 @@ import { resetPassword } from "@/services/UserService";
 
 const ForgotPass = () => {
   const router = useRouter();
+  const [errors, setErrors] = useState({});
   const [form, setForm] = useState({
     nip: "", email: ""
   });
@@ -21,17 +22,15 @@ const ForgotPass = () => {
   }
 
   const handleSubmit = async () => {
-    try {
-      const response = await resetPassword(form);
-      console.log(response)
-      if(response.data.message === "Reset password successfully") {
-        return router.push({
-          pathname: "/splash/SuccessSplash",
-          params: {type: "resetPassword"}
-        })
-      }
-    } catch (e) {
-      
+    const response = await resetPassword(form);
+    
+    if(response.success) {
+      return router.push({
+        pathname: "/splash/SuccessSplash",
+        params: {type: "resetPassword"}
+      });
+    } else {
+      setErrors(response.errors);
     }
   }
 
@@ -46,12 +45,14 @@ const ForgotPass = () => {
             placeholder="Input Your NIP"
             value={form.nip}
             onChangeText={(text) => handleInput("nip", text)}
+            feedback={ errors.nip }
             />
           <InputField
             label="Email"
             placeholder="Input Your Email"
             value={form.email}
             onChangeText={(text) => handleInput("email", text)}
+            feedback={ errors.email }
             />
           <Button text="Send Request" style={{marginBottom: 10}} onPress={handleSubmit}/>
           <Button text="Cancel" type="secondary" onPress={() => router.navigate("/signin")}/>

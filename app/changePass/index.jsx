@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { SafeAreaView, Text, View, ScrollView, StyleSheet } from "react-native";
+import { useRouter } from "expo-router";
 
 import Button from "@/components/ui/Button";
 import InputField from "@/components/ui/InputField";
 import HeaderBar from "@/components/ui/HeaderBar";
 import Sizes from "@/constants/Sizes";
 import { updatePassword } from "@/services/UserService";
-import { useRouter } from "expo-router";
 
 const ChangePassword = () => {
   const router = useRouter();

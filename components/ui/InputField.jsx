@@ -10,14 +10,17 @@ const InputField = (props) => {
         <View style={styles.fieldContainer}>
             <Text style={styles.label}>{props.label}</Text>
             <TextInput
-                style={styles.input}
+                style={[styles.input, props.style]}
                 placeholder={props.placeholder}
                 placeholderTextColor={Colors.gray}
                 secureTextEntry={props.secure}
                 keyboardType="default"
                 autoCapitalize="none"
                 value={props.value}
+                multiline={props.multiline}
+                numberOfLines={props.numberOfLines}
                 onChangeText={props.onChangeText}
+                textAlignVertical="top"
             />
             {props.feedback && <Feedback type="danger" message={props.feedback}/>}
         </View>

@@ -17,13 +17,16 @@ export const updatePassword = async ({ current_password, new_password, new_passw
 }
 
 export const resetPassword = async ({ nip, email }) => {
-    const response = await axios.post(BASE_API + "/user/reset-password", {
-        nip,
-        email
-    });
-    
-    return response;
-};
+    try {
+        const response = await axios.post(BASE_API + "/user/reset-password", {
+            nip,
+            email
+        });
+        return { success: true, data: response.data } 
+    } catch (error) {
+        return errorHandler(error);
+    }
+}
 
 export const updatePhoto = async (uri) => {
     const formData = new FormData();
@@ -33,6 +36,10 @@ export const updatePhoto = async (uri) => {
         type: "image/jpg",
     });
     
-    const response = await Api.post("/user/update-photo", formData);
-    return response;
+    try {
+        const response = await Api.post("/user/update-photo", formData);
+        return { success: true, data: response.data }
+    } catch (error) {
+        return errorHandler(error);
+    }
 }

@@ -16,7 +16,7 @@ export function AuthProvider({ children }) {
       const storedUser = await AsyncStorage.getItem("user");
       setIsAuthenticated(!!token);
       if (storedUser) setUser(JSON.parse(storedUser));
-    };
+    }
 
     checkAuth();
   }, []);
@@ -35,8 +35,8 @@ export function AuthProvider({ children }) {
     return {
       errors: response.errors,
       message: response.message,
-    };
-  };
+    }
+  }
 
   const signOut = async () => {
     try {
@@ -47,9 +47,9 @@ export function AuthProvider({ children }) {
       await AsyncStorage.removeItem("access_token");
       await AsyncStorage.removeItem("user");
     } catch (error) {
-      console.log(error);
+      return error;
     }
-  };
+  }
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, user, signIn, signOut }}>
