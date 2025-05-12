@@ -40,10 +40,10 @@ export function AuthProvider({ children }) {
 
   const signOut = async () => {
     try {
-      await deAuthentication();
       router.replace("/signin");
       setUser(null);
       setIsAuthenticated(false);
+      await deAuthentication();
       await AsyncStorage.removeItem("access_token");
       await AsyncStorage.removeItem("user");
     } catch (error) {
