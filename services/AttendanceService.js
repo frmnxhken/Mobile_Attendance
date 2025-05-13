@@ -1,5 +1,7 @@
 import Api from "./Api";
 import { errorHandler } from "@/utils/errorHandler";
+import { ENDPOINTS } from "@/constants/Config";
+
 
 export const postCheckIn = async ({ uri, time, date, lat, long }) => {
   const formData = new FormData();
@@ -15,7 +17,7 @@ export const postCheckIn = async ({ uri, time, date, lat, long }) => {
   formData.append("checkin_lat", lat);
 
   try {
-    const response = await Api.post("/checkin", formData);
+    const response = await Api.post(ENDPOINTS.ATTENDANCE.CHECKIN, formData);
     return { success: true, data: response.data };
   } catch (error) {
     return errorHandler(error);
@@ -36,7 +38,7 @@ export const postCheckOut = async ({ uri, time, date, lat, long }) => {
   formData.append("checkout_lat", lat);
 
   try {
-    const response = await Api.post("/checkout", formData);
+    const response = await Api.post(ENDPOINTS.ATTENDANCE.CHECKOUT, formData);
     return { success: true, data: response.data };
   } catch (error) {
     return errorHandler(error);
@@ -44,6 +46,6 @@ export const postCheckOut = async ({ uri, time, date, lat, long }) => {
 }
 
 export const getCheckStatus = async () => {
-  const response = await Api.get("/status");
+  const response = await Api.get(ENDPOINTS.ATTENDANCE.STATUS);
   return response;
 }
