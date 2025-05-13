@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView, StyleSheet, Text, View} from "react-native";
 import * as Location from "expo-location";
 import { CameraView, useCameraPermissions } from "expo-camera";
 
 import Button from "@/components/ui/Button";
 import HeaderBar from "@/components/ui/HeaderBar";
-import Notification from "@/components/screens/Notification";
 import InfoBar from "@/components/attendance/InfoBar";
+import PermissionNotification from "@/components/attendance/PermissionNotification";
 
 import { useAuth } from "@/contexts/AuthContext";
 import { postCheckIn, postCheckOut, getCheckStatus } from "@/services/AttendanceService";
@@ -15,9 +15,11 @@ import { getDateTime, formatToDayMonth } from "@/utils/dateHelpers";
 
 import CameraPermission from "@/assets/Icons/CameraPermission";
 import { useRouter } from "expo-router";
+import LocationPermission from "@/assets/Icons/LocationPermission";
 
 const Presention = () => {
   const [permission, requestPermission] = useCameraPermissions();
+  const [locationPermission, setLocationPermission] = useState(null);
   const { user } = useAuth();
   const router = useRouter();
   const [location, setLocation] = useState(null);
@@ -25,14 +27,19 @@ const Presention = () => {
   const cameraRef = useRef(null);
   const dateTime = getDateTime();
   const distance = haversineDistance(
-    {"latitude": location?.latitude?.toFixed(5), 
-    "longitude": location?.longitude?.toFixed(5)},
-    {"latitude": user?.office_lat,
-    "longitude": user?.office_long}).toFixed(2);
+    {
+      "latitude": location?.latitude?.toFixed(5),
+      "longitude": location?.longitude?.toFixed(5)
+    },
+    {
+      "latitude": user?.office_lat,
+      "longitude": user?.office_long
+    }).toFixed(2);
 
   useEffect(() => {
     (async () => {
       const { status } = await Location.requestForegroundPermissionsAsync();
+      setLocationPermission(status);
       if (status === "granted") {
         const loc = await Location.getCurrentPositionAsync({});
         setLocation(loc.coords);
@@ -72,29 +79,38 @@ const Presention = () => {
 
       const response = await getCheckStatus();
       setAttendance(response.data.attendance);
-      
+
       return router.push({
         pathname: "/splash/SuccessSplash",
-        params: {type: "formSubmission"}
+        params: { type: "formSubmission" }
       });
     } catch (e) {
       return;
     }
   }
 
-  if (!permission) {
-    return <View />;
+  if (!permission?.granted) {
+    return (
+      <PermissionNotification
+        type="Camera"
+        icon={<CameraPermission />}
+        request={requestPermission}
+        onGranted={() => {
+          setPermission({ granted: true });
+        }}
+      />
+    );
   }
 
-  if (!permission.granted) {
+  if (locationPermission !== "granted") {
     return (
-      <Notification
-        header="Attendance"
-        title="Allow Camera Access"
-        description="Camera access is needed to take a photo as proof of your attendance"
-        buttonText="Grant Permission"
-        icon={<CameraPermission />}
-        onPress={requestPermission}
+      <PermissionNotification
+        type="Location"
+        icon={<LocationPermission />}
+        request={Location.requestForegroundPermissionsAsync}
+        onGranted={() => {
+          setPermission({ granted: true });
+        }}
       />
     );
   }
@@ -116,8 +132,8 @@ const Presention = () => {
         </CameraView>
         <InfoBar
           distance={
-            location ? 
-            distance + " km" : "calc.."
+            location ?
+              distance + " km" : "calc.."
           }
           time={dateTime.time}
           date={formatToDayMonth(dateTime.today)}

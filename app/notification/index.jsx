@@ -1,6 +1,6 @@
 import React from "react";
 import { useRouter } from "expo-router";
-import Notification from "@/components/screens/Notification";
+import Notification from "@/components/ui/Notification";
 
 const NotificationScreen = () => {
 const router = useRouter();
