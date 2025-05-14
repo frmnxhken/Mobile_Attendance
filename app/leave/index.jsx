@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { SafeAreaView, Text, View, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { useRouter } from "expo-router";
-import * as ImagePicker from "expo-image-picker";
 
 import HeaderBar from "@/components/ui/HeaderBar";
 import Button from "@/components/ui/Button";
@@ -13,6 +12,7 @@ import Colors from "@/constants/Colors";
 import UploadIcon from "@/assets/Icons/UploadIcon";
 import { postRequestExcuse } from "@/services/ExcuseService";
 import Feedback from "@/components/ui/Feedback";
+import useImagePickerHandler from "@/hooks/usePickerImageHandler";
 
 const Leave = () => {
   const router = useRouter();
@@ -20,17 +20,11 @@ const Leave = () => {
   const [reason, setReason] = useState("");
   const [proof, setProof] = useState(null);
   const [errors, setErrors] = useState({});
+  const { pickImage } = useImagePickerHandler();
 
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      quality: 1,
-    });
-
-    if (!result.canceled) {
-      setProof(result.assets[0].uri);
-    }
+  const handlePick = async () => {
+    const uri = await pickImage();
+    if (uri) setProof(uri);
   }
 
   const handleSubmit = async () => {
@@ -68,7 +62,7 @@ const Leave = () => {
           />
           <View style={{marginBottom: 15}}>
             <Text style={styles.formLabel}>Proof</Text>
-            <TouchableOpacity onPress={pickImage} style={styles.uploadContainer}>
+            <TouchableOpacity onPress={handlePick} style={styles.uploadContainer}>
               {proof && <Image style={styles.preview} source={{ uri: proof }} />}
               <UploadIcon />
               <Text style={styles.uploadText}>Upload Image</Text>

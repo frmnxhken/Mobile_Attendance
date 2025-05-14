@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { SafeAreaView, Text, View, Image, StyleSheet, TouchableOpacity } from "react-native";
-import * as ImagePicker from "expo-image-picker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import Button from "@/components/ui/Button";
@@ -12,28 +11,22 @@ import Sizes from "@/constants/Sizes";
 import { useAuth } from "@/contexts/AuthContext";
 import { updatePhoto } from "@/services/UserService";
 import { useRouter } from "expo-router";
+import useImagePickerHandler from "@/hooks/usePickerImageHandler";
 
 const EditProfile = () => {
   const router = useRouter();
   const { user } = useAuth();
   const [photo, setPhoto] = useState(user?.photo);
+  const { pickImage } = useImagePickerHandler();
 
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      quality: 1,
-    });
-
-    if (!result.canceled) {
-      setPhoto(result.assets[0].uri);
-    }
+  const handlePick = async () => {
+    const uri = await pickImage();
+    if (uri) setPhoto(uri);
   }
 
   const handleSubmit = async() => {
     try {
       const response = await updatePhoto(photo);
-      console.log(response)
       if(response.data.message === "Photo updated successfully") {
         user.photo = response.data.photo;
         await AsyncStorage.setItem("user", JSON.stringify(user));
@@ -57,7 +50,7 @@ const EditProfile = () => {
               source={{ uri: photo }}
               style={styles.avatar}
             />
-            <TouchableOpacity onPress={pickImage} style={styles.cameraButton}>
+            <TouchableOpacity onPress={handlePick} style={styles.cameraButton}>
               <CameraIcon />
             </TouchableOpacity>
           </View>
