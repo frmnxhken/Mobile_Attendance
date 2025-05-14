@@ -21,6 +21,7 @@ export const ENDPOINTS = {
         CHECKOUT: "/attendance/checkout"
     },
     EXCUSE: {
+        EXCUSES: "/excuse", 
         REQUEST: "/excuse/request"
     }
 }

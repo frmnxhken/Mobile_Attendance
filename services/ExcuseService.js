@@ -22,3 +22,8 @@ export const postRequestExcuse = async ({ reason, date, uri }) => {
     return errorHandler(error);
   }
 }
+
+export const getExcuses = async () => {
+  const response = await Api.get(ENDPOINTS.EXCUSE.EXCUSES);
+  return response.data;
+}
