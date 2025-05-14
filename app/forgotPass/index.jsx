@@ -1,38 +1,17 @@
-import React, { useState } from "react";
-import { useRouter } from "expo-router";
+import React from "react";
 import { SafeAreaView, View, Text, Image, StyleSheet } from "react-native";
-import Illustration from "@/assets/images/forgotPass.png";
 
 import InputField from "@/components/ui/InputField";
 import Button from "@/components/ui/Button";
 
 import Sizes from "@/constants/Sizes";
 import Colors from "@/constants/Colors";
-import { resetPassword } from "@/services/UserService";
+import Illustration from "@/assets/images/forgotPass.png";
+
+import useForgotPassForm from "@/hooks/useForgotPassForm";
 
 const ForgotPass = () => {
-  const router = useRouter();
-  const [errors, setErrors] = useState({});
-  const [form, setForm] = useState({
-    nip: "", email: ""
-  });
-
-  const handleInput = (fieldName, value) => {
-    setForm(prev => ({ ...prev, [fieldName]: value }));
-  }
-
-  const handleSubmit = async () => {
-    const response = await resetPassword(form);
-    
-    if(response.success) {
-      return router.push({
-        pathname: "/splash/SuccessSplash",
-        params: {type: "resetPassword"}
-      });
-    } else {
-      setErrors(response.errors);
-    }
-  }
+  const { form, errors, handleInput, handleSubmit } = useForgotPassForm();
 
   return (
     <SafeAreaView style={styles.wrapper}>

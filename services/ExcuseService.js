@@ -7,11 +7,13 @@ export const postRequestExcuse = async ({ reason, date, uri }) => {
 
   formData.append("reason", reason);
   formData.append("date", date);
-  formData.append("proof", {
-    uri,
-    name: "proof.jpg",
-    type: "image/jpg",
-  });
+  if(uri) {
+    formData.append("proof", {
+      uri,
+      name: "proof.jpg",
+      type: "image/jpeg",
+    });
+  }
 
   try {
     const response = await Api.post(ENDPOINTS.EXCUSE.REQUEST, formData);

@@ -1,35 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, Text, SafeAreaView, StyleSheet } from "react-native";
 import { Link } from "expo-router";
+
 import Button from "@/components/ui/Button";
 import InputField from "@/components/ui/InputField";
-import Colors from "@/constants/Colors";
-import { useAuth } from "@/contexts/AuthContext";
 import Alert from "@/components/ui/Alert";
 
+import Colors from "@/constants/Colors";
+import useSignInForm from "@/hooks/useSignInForm";
+
 const SignIn = () => {
-  const { signIn } = useAuth();
-  const [form, setForm] = useState({
-    email: "", password: ""
-  });
-  const [alert, setAlert] = useState(null);
-  const [errors, setErrors] = useState([]);
-
-  const handleInput = (fieldName, value) => {
-    setForm(prev => ({ ...prev, [fieldName]: value }));
-  }
-
-  const handleSignIn = async () => {
-    const response = await signIn(form);
-    
-    if (response.errors) {
-      setErrors(response.errors);
-      setAlert(null);
-    } else {
-      setErrors([]);
-      setAlert(response.message);
-    }
-  }
+  const { form, errors, alert, handleInput, handleSignIn } = useSignInForm();
 
   return (
     <SafeAreaView style={styles.wrapper}>

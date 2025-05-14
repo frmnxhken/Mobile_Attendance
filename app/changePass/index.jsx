@@ -1,38 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import { SafeAreaView, Text, View, ScrollView, StyleSheet } from "react-native";
-import { useRouter } from "expo-router";
 
 import Button from "@/components/ui/Button";
 import InputField from "@/components/ui/InputField";
 import HeaderBar from "@/components/ui/HeaderBar";
+
 import Sizes from "@/constants/Sizes";
-import { updatePassword } from "@/services/UserService";
+import useChangePassForm from "@/hooks/useChangePassForm";
 
 const ChangePassword = () => {
-  const router = useRouter();
-  const [errors, setErrors] = useState({});
-  const [form, setForm] = useState({
-    current_password: "",
-    new_password: "",
-    new_password_confirmation: ""
-  });
-
-  const handleInput = (fieldName, value) => {
-    setForm(prev => ({ ...prev, [fieldName]: value }));
-  }
-
-  const handleSubmit = async () => {
-    const response = await updatePassword(form);
-    if (response.success) {
-      setErrors({});
-      router.push({
-        pathname: "/splash/SuccessSplash",
-        params: { type: "passwordChange" },
-      });
-    } else {
-      setErrors(response.errors);
-    }
-  }
+  const { form, errors, handleInput, handleSubmit } = useChangePassForm();
 
   return (
     <SafeAreaView style={styles.wrapper}>

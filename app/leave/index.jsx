@@ -1,48 +1,25 @@
-import React, { useState } from "react";
+import React from "react";
 import { SafeAreaView, Text, View, StyleSheet, TouchableOpacity, Image } from "react-native";
-import { useRouter } from "expo-router";
 
 import HeaderBar from "@/components/ui/HeaderBar";
 import Button from "@/components/ui/Button";
 import InputField from "@/components/ui/InputField";
+import Feedback from "@/components/ui/Feedback";
 
-import { getDateTime } from "@/utils/dateHelpers";
 import Sizes from "@/constants/Sizes";
 import Colors from "@/constants/Colors";
 import UploadIcon from "@/assets/Icons/UploadIcon";
-import { postRequestExcuse } from "@/services/ExcuseService";
-import Feedback from "@/components/ui/Feedback";
+
 import useImagePickerHandler from "@/hooks/usePickerImageHandler";
+import useExcuseForm from "@/hooks/useExcuseForm";
 
 const Leave = () => {
-  const router = useRouter();
-  const dateTime = getDateTime();
-  const [reason, setReason] = useState("");
-  const [proof, setProof] = useState(null);
-  const [errors, setErrors] = useState({});
+  const { reason, setReason, proof, setProof, errors, handleSubmit } = useExcuseForm();
   const { pickImage } = useImagePickerHandler();
 
   const handlePick = async () => {
     const uri = await pickImage();
     if (uri) setProof(uri);
-  }
-
-  const handleSubmit = async () => {
-    const payload = {
-      reason: reason,
-      date: dateTime.today,
-      uri: proof
-    }
-
-    const response = await postRequestExcuse(payload);
-    if(response.success) {
-      return router.push({
-        pathname: "/splash/SuccessSplash",
-        params: { type: "leaveRequest" }
-      });
-    } else {
-      setErrors(response.errors);
-    }
   }
 
   return (
