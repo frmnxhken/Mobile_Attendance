@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { SafeAreaView, Text, View, Image, StyleSheet, TouchableOpacity } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import Button from "@/components/ui/Button";
 import HeaderBar from "@/components/ui/HeaderBar";
@@ -8,37 +7,10 @@ import HeaderBar from "@/components/ui/HeaderBar";
 import CameraIcon from "@/assets/Icons/CameraIcon";
 
 import Sizes from "@/constants/Sizes";
-import { useAuth } from "@/contexts/AuthContext";
-import { updatePhoto } from "@/services/UserService";
-import { useRouter } from "expo-router";
-import useImagePickerHandler from "@/hooks/usePickerImageHandler";
+import useUpdatePhotoProfile from "@/hooks/useUpdatePhotoProfile";
 
 const EditProfile = () => {
-  const router = useRouter();
-  const { user } = useAuth();
-  const [photo, setPhoto] = useState(user?.photo);
-  const { pickImage } = useImagePickerHandler();
-
-  const handlePick = async () => {
-    const uri = await pickImage();
-    if (uri) setPhoto(uri);
-  }
-
-  const handleSubmit = async() => {
-    try {
-      const response = await updatePhoto(photo);
-      if(response.data.message === "Photo updated successfully") {
-        user.photo = response.data.photo;
-        await AsyncStorage.setItem("user", JSON.stringify(user));
-        return router.push({
-          pathname: "/splash/SuccessSplash",
-          params: {type: "profileUpdate"}
-        });
-      }
-    } catch (e) {
-      console.log(e)
-    }
-  }
+  const { photo, handlePick, handleSubmit } = useUpdatePhotoProfile();
 
   return (
     <SafeAreaView style={styles.wrapper}>
