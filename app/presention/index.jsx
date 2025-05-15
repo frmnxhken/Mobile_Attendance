@@ -81,7 +81,7 @@ const Presention = () => {
           <Button text="Check Out" type="dark" onPress={() => handleAttendance("checkout")} />
         )}
         {attendance === "done" && (
-          <Button text="Already Checked Out" type="secondary" disabled />
+          <Button text="Done" type="secondary" disabled />
         )}
       </View>
     </SafeAreaView>
