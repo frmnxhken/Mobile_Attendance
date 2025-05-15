@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import { SafeAreaView, StyleSheet, Text, View} from "react-native";
 import * as Location from "expo-location";
 import { CameraView, useCameraPermissions } from "expo-camera";
@@ -8,88 +8,22 @@ import HeaderBar from "@/components/ui/HeaderBar";
 import InfoBar from "@/components/attendance/InfoBar";
 import PermissionNotification from "@/components/attendance/PermissionNotification";
 
-import { postCheckIn, postCheckOut, getCheckStatus } from "@/services/AttendanceService";
-import { haversineDistance } from "@/utils/geoHelpers";
-import { getDateTime, formatToDayMonth } from "@/utils/dateHelpers";
-
+import { formatToDayMonth } from "@/utils/dateHelpers";
 import CameraPermission from "@/assets/Icons/CameraPermission";
-import { useRouter } from "expo-router";
 import LocationPermission from "@/assets/Icons/LocationPermission";
+import useHandleAttendance from "@/hooks/useHandleAttendance";
 
 const Presention = () => {
   const [permission, requestPermission] = useCameraPermissions();
-  const [locationPermission, setLocationPermission] = useState(null);
-  const router = useRouter();
-  const [location, setLocation] = useState(null);
-  const [attendance, setAttendance] = useState(null);
-  const [office, setOffice] = useState({
-    lat: null, long: null
-  });
-  const cameraRef = useRef(null);
-  const dateTime = getDateTime();
-  const distance = haversineDistance(
-    {
-      "latitude": location?.latitude?.toFixed(5),
-      "longitude": location?.longitude?.toFixed(5)
-    },
-    {
-      "latitude": office?.lat,
-      "longitude": office?.long
-    }).toFixed(2);
-
-  useEffect(() => {
-    (async () => {
-      const { status } = await Location.requestForegroundPermissionsAsync();
-      setLocationPermission(status);
-      if (status === "granted") {
-        const loc = await Location.getCurrentPositionAsync({});
-        setLocation(loc.coords);
-      }
-    })();
-  }, []);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const response = await getCheckStatus();
-        setAttendance(response.data.attendance);
-        setOffice({lat: response.data.office_lat, long: response.data.office_long});
-      } catch (e) {
-        return;
-      }
-    })();
-  }, []);
-
-  const handleAttendance = async (type) => {
-    if (!cameraRef || !location) return;
-    const photo = await cameraRef.current.takePictureAsync();
-
-    const payload = {
-      uri: photo.uri,
-      time: dateTime.time,
-      date: dateTime.today,
-      lat: location.latitude.toFixed(5),
-      long: location.longitude.toFixed(5),
-    };
-
-    try {
-      if (type === "checkin") {
-        await postCheckIn(payload);
-      } else {
-        await postCheckOut(payload);
-      }
-
-      const response = await getCheckStatus();
-      setAttendance(response.data.attendance);
-
-      return router.push({
-        pathname: "/splash/SuccessSplash",
-        params: { type: "formSubmission" }
-      });
-    } catch (e) {
-      return;
-    }
-  }
+  const {
+    locationPermission,
+    location,
+    attendance,
+    distance,
+    dateTime,
+    handleAttendance,
+    cameraRef,
+  } = useHandleAttendance();
 
   if (!permission?.granted) {
     return (
