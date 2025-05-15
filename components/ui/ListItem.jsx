@@ -19,7 +19,7 @@ const ListItem = (props) => {
           </Text>
           <View style={styles.space}>
             <InGrayIcon />
-            <Text style={styles.actionText}>{formatTime(props.checkin)}</Text>
+            <Text style={styles.actionText}>{formatTime(props.checkin ?? "--:--")}</Text>
           </View>
         </View>
         <View>
@@ -32,7 +32,7 @@ const ListItem = (props) => {
             justifyContent: "flex-end"
           }]}>
             <OutGrayIcon />
-            <Text style={styles.actionText}>{formatTime(props.checkout)}</Text>
+            <Text style={styles.actionText}>{formatTime(props.checkout ?? "--:--")}</Text>
           </View>
         </View>
       </View>

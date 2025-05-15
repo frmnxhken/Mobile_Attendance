@@ -30,7 +30,7 @@ const Leave = () => {
           <InputField
             label="Reason"
             multiline={true}
-            numberOfLines={1}
+            numberOfLines={8}
             style={{ height: 120 }}
             placeholder="Type your reason.."
             value={reason}
