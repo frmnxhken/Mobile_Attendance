@@ -8,7 +8,6 @@ import HeaderBar from "@/components/ui/HeaderBar";
 import InfoBar from "@/components/attendance/InfoBar";
 import PermissionNotification from "@/components/attendance/PermissionNotification";
 
-import { useAuth } from "@/contexts/AuthContext";
 import { postCheckIn, postCheckOut, getCheckStatus } from "@/services/AttendanceService";
 import { haversineDistance } from "@/utils/geoHelpers";
 import { getDateTime, formatToDayMonth } from "@/utils/dateHelpers";
@@ -20,10 +19,12 @@ import LocationPermission from "@/assets/Icons/LocationPermission";
 const Presention = () => {
   const [permission, requestPermission] = useCameraPermissions();
   const [locationPermission, setLocationPermission] = useState(null);
-  const { user } = useAuth();
   const router = useRouter();
   const [location, setLocation] = useState(null);
   const [attendance, setAttendance] = useState(null);
+  const [office, setOffice] = useState({
+    lat: null, long: null
+  });
   const cameraRef = useRef(null);
   const dateTime = getDateTime();
   const distance = haversineDistance(
@@ -32,8 +33,8 @@ const Presention = () => {
       "longitude": location?.longitude?.toFixed(5)
     },
     {
-      "latitude": user?.office_lat,
-      "longitude": user?.office_long
+      "latitude": office?.lat,
+      "longitude": office?.long
     }).toFixed(2);
 
   useEffect(() => {
@@ -52,6 +53,7 @@ const Presention = () => {
       try {
         const response = await getCheckStatus();
         setAttendance(response.data.attendance);
+        setOffice({lat: response.data.office_lat, long: response.data.office_long});
       } catch (e) {
         return;
       }
