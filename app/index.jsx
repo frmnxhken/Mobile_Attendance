@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Text, View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { Link, useRouter } from "expo-router";
 import Card from "@/components/ui/Card";
@@ -12,6 +12,7 @@ import Colors from "@/constants/Colors";
 import { getAttendanceRecent } from "@/services/HistoryService";
 import { useAuth } from "@/contexts/AuthContext";
 import { formatTime } from "@/utils/dateHelpers";
+import { useFocusEffect } from "@react-navigation/native";
 
 const Home = () => {
     const router = useRouter();
@@ -19,11 +20,16 @@ const Home = () => {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        getAttendanceRecent().then(response => {
-            setData(response.data)
-        }).finally(() => setLoading(false));
-    }, [])
+    useFocusEffect(
+        React.useCallback(() => {
+            setLoading(true);
+            getAttendanceRecent()
+                .then(response => {
+                    setData(response.data);
+                })
+                .finally(() => setLoading(false));
+        }, [])
+    );
 
     return (
         <SafeAreaView style={styles.wrapper}>
@@ -32,7 +38,7 @@ const Home = () => {
                     name={user?.name}
                     photo={user?.photo}
                 />
-                <CalendarSlide/>
+                <CalendarSlide />
                 <View style={styles.sectionSpace}>
                     <View>
                         <Text style={styles.headerTitle}>Today Attendance</Text>
@@ -60,8 +66,8 @@ const Home = () => {
                 </View>
             </ScrollView>
             <View style={styles.CTAContainer}>
-                <Button text="Excused" type="dark" onPress={() => router.navigate("/leave")} style={{width: "48%"}}/>
-                <Button text="Attendance" onPress={() => router.navigate("/presention")} style={{width: "48%"}}/>
+                <Button text="Excused" type="dark" onPress={() => router.navigate("/leave")} style={{ width: "48%" }} />
+                <Button text="Attendance" onPress={() => router.navigate("/presention")} style={{ width: "48%" }} />
             </View>
         </SafeAreaView>
     )
