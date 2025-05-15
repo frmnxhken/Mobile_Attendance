@@ -26,6 +26,7 @@ export const getWeeklyRange = (today = new Date()) => {
         const dayObj = {
             date: dateStr,
             day,
+            month: month + 1,
             ...(isToday ? { active: true } : {}),
         };
 
@@ -52,3 +53,15 @@ export const formatTime = timeStr => {
     const time = timeStr?.slice(0, 5)
     return time;
 }
+
+
+export const formattedDates = (data) => { 
+    let result = []
+    data.map(item => {
+        const year = new Date().getFullYear();
+        const month = String(item.month).padStart(2, '0');
+        const day = String(item.date).padStart(2, '0');
+        result.push(`${year}-${month}-${day}`);}
+    )
+    return result
+};

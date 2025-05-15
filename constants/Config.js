@@ -23,5 +23,6 @@ export const ENDPOINTS = {
     EXCUSE: {
         EXCUSES: "/excuse", 
         REQUEST: "/excuse/request"
-    }
+    },
+    HOLLIDAY: '/holliday'
 }
